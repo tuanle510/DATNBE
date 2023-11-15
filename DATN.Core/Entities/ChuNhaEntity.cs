@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DATN.Core.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace DATN.Core.Entities
 {
     public class ChuNhaEntity
     {
+        [PrimaryKey]
         public Guid id { get; set; }
         public string name { get; set; }
         public string birthdate { get; set; }

@@ -8,5 +8,25 @@ namespace DATN.Core.Interfaces.Services
 {
     public interface IBaseService<T>
     {
+        /// <summary>
+        /// Lấy dữ liệu entity mói
+        /// </summary>
+        /// <returns></returns>
+        T GetNew();
+
+        /// <summary>
+        /// Xử lí nghiệp vụ chung khi thêm mới đối tượng
+        /// </summary>
+        /// <param name="entity"> Đối tượng thêm mới </param>
+        /// <returns> Số lượng bản ghi </returns>
+        int InsertService(T entity);
+
+        /// <summary>
+        /// Xử lí nghiệp vụ khi sửa dối tượng
+        /// </summary>
+        /// <param name="entityId"> Id của đối tượng </param>
+        /// <param name="entity"> đối tượng đã sửa </param>
+        /// <returns></returns>
+        int UpdateService(Guid entityId, T entity);
     }
 }

@@ -1,12 +1,14 @@
 ﻿using DATN.Core.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DATN.Core.Entities
 {
+    [TableName("chu_nha")]
     public class ChuNhaEntity
     {
         [PrimaryKey]

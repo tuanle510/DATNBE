@@ -4,6 +4,7 @@ using MySqlConnector;
 using Dapper;
 using System.Text.RegularExpressions;
 using System.Text;
+using DATN.Core.Attributes;
 
 namespace DATN.Infrastructure.Repository
 {
@@ -30,7 +31,7 @@ namespace DATN.Infrastructure.Repository
         /// <returns></returns>
         public List<T> Get(string column, string? filter, int take, int skip)
         {
-            var table = this.ConvertToSnakeCase(typeof(T).Name);
+            var table = this.getTableName(typeof(T));
             //var tableName = Regex.Replace(typeof(T).Name.ToLower(), "entity", string.Empty);
             // Thực hiện khai báo câu lệnh truy vấn SQL:
             var sqlCommand = $"SELECT * FROM { table }";
@@ -41,38 +42,15 @@ namespace DATN.Infrastructure.Repository
             // Trả về dữ liệu dạng List:
             return entities.ToList();
         }
-        private string ConvertToSnakeCase(string input)
-        {
-            StringBuilder sb = new StringBuilder();
-            var entityText = "Entity";
-            if (input.EndsWith(entityText))
-            {
-                input = Regex.Replace(input, entityText, string.Empty);
-            }
 
-            for (int i = 0; i < input.Length; i++)
-            {
-                char currentChar = input[i];
-
-                if (i > 0 && char.IsUpper(currentChar))
-                {
-                    // Nếu ký tự là viết hoa và không phải ký tự đầu tiên
-                    // thì thêm dấu '_' trước khi thêm ký tự viết thường
-                    sb.Append('_').Append(char.ToLower(currentChar));
-                }
-                else if (currentChar != '_')
-                {
-                    // Bỏ qua dấu '_' nếu có trong chuỗi ban đầu
-                    sb.Append(currentChar);
-                }
-            }
-
-            return sb.ToString().ToLower();
-        }
-
+        /// <summary>
+        /// Lấy theo id
+        /// </summary>
+        /// <param name="entityId"></param>
+        /// <returns></returns>
         public T GetById(Guid entityId)
         {
-            var table = this.ConvertToSnakeCase(typeof(T).Name);
+            var table = this.getTableName(typeof(T));
             // Thực hiện khai báo câu lệnh truy vấn SQL:
             var sqlQuery = $"SELECT * FROM {table} WHERE {table}.id = @entityId";
             var parameters = new DynamicParameters();
@@ -83,6 +61,17 @@ namespace DATN.Infrastructure.Repository
 
             // Trả về dữ liệu dạng List:
             return entities;
+        }
+
+        /// <summary>
+        /// Lấy tên table theo custom Attribute
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        private string getTableName(Type type)
+        {
+            TableName? attribute = Attribute.GetCustomAttribute(type, typeof(TableName)) as TableName;
+            return attribute != null ? attribute.Name : "";
         }
     }
 }

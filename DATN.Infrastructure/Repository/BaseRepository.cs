@@ -5,6 +5,7 @@ using Dapper;
 using System.Text.RegularExpressions;
 using System.Text;
 using DATN.Core.Attributes;
+using System.Reflection;
 
 namespace DATN.Infrastructure.Repository
 {
@@ -51,8 +52,9 @@ namespace DATN.Infrastructure.Repository
         public T GetById(Guid entityId)
         {
             var table = this.getTableName(typeof(T));
+            var key = this.getPrimaryKey(typeof(T));
             // Thực hiện khai báo câu lệnh truy vấn SQL:
-            var sqlQuery = $"SELECT * FROM {table} WHERE {table}.id = @entityId";
+            var sqlQuery = $"SELECT * FROM {table} WHERE {key} = @entityId";
             var parameters = new DynamicParameters();
             parameters.Add("@entityId", entityId);
 
@@ -72,6 +74,17 @@ namespace DATN.Infrastructure.Repository
         {
             TableName? attribute = Attribute.GetCustomAttribute(type, typeof(TableName)) as TableName;
             return attribute != null ? attribute.Name : "";
+        }
+
+        /// <summary>
+        /// Lấy khóa chính
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        private string getPrimaryKey(Type type)
+        {
+            var props = type.GetProperties().Where(e => e.IsDefined(typeof(PrimaryKey)));
+            return props.FirstOrDefault().Name;
         }
     }
 }

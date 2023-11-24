@@ -12,11 +12,11 @@ namespace DATN.Core.Entities
     public class ChuNhaEntity
     {
         [PrimaryKey]
-        public Guid id { get; set; }
-        public string name { get; set; }
+        public Guid owner_id { get; set; }
+        public string owner_name { get; set; }
         public string birthdate { get; set; }
         public string email { get; set; }
-        public string location { get; set; }
+        public string address { get; set; }
         public string phone_number { get; set; }
         public string paper_number { get; set; }
         public string paper_date { get; set; }

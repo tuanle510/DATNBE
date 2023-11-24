@@ -36,6 +36,8 @@ builder.Services.AddMvc()
 // Cấu hình Dependency Injection:
 builder.Services.AddScoped<IChuNhaRepository, ChuNhaRepository>();
 builder.Services.AddScoped<IChuNhaService, ChuNhaService>();
+builder.Services.AddScoped<ICanHoRepository, CanHoRepository>();
+builder.Services.AddScoped<ICanHoService, CanHoService>();
 //builder.Services.AddScoped<IFixedAssetCategoryRepository, FixedAssetCategoryRepository>();
 //builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 

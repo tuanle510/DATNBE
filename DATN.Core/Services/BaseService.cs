@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,18 +28,8 @@ namespace DATN.Core.Services
             Type type = typeof(T);
             T entity = (T)Activator.CreateInstance(type);
             var properties = typeof(T).GetProperties();
-            foreach (var prop in properties)
-            {
-                // Kiểu dữ liệu của prop:
-                var propType = prop.PropertyType;
-                // Kiểm tra prop hiện tại có phải là khóa chính hay không, nếu đúng thì gán lại giá trị mới cho prop:
-                var isPrimarykey = prop.IsDefined(typeof(PrimaryKey), true);
-                if (isPrimarykey == true && (propType == typeof(Guid) || propType == typeof(Guid?)))
-                {
-                    prop.SetValue(entity, Guid.NewGuid());
-                    break;
-                }
-            }
+            var prop = type.GetProperties().Where(e => e.IsDefined(typeof(PrimaryKey))).FirstOrDefault();
+            prop.SetValue(entity, Guid.NewGuid());
             return entity;
         }
 

@@ -80,19 +80,19 @@ namespace MISA.Web03.API.Controllers
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        //[HttpPost]
-        //public IActionResult Post([FromBody] T entity)
-        //{
-        //    try
-        //    {
-        //        var res = _baseService.InsertService(entity);
-        //        return StatusCode(201, res);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return HandleException(ex);
-        //    }
-        //}
+        [HttpPost]
+        public IActionResult Post([FromBody] T entity)
+        {
+            try
+            {
+                var res = _baseService.InsertService(entity);
+                return StatusCode(201, res);
+            }
+            catch (Exception ex)
+            {
+                return HandleException(ex);
+            }
+        }
 
         /// <summary>
         /// Xử lí sửa đối tượng 

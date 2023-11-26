@@ -33,9 +33,16 @@ namespace DATN.Core.Services
             return entity;
         }
 
+
+        /// <summary>
+        /// Xử lí nghiệp vụ chung khi thêm mới đối tượng
+        /// </summary>
+        /// <param name="entity"> Đối tượng thêm mới </param>
+        /// <returns> Số lượng bản ghi </returns>
         public int InsertService(T entity)
         {
-            throw new NotImplementedException();
+            // Nếu không có lỗi thì thực hiện insert
+            return _baseRepository.Insert(entity);
         }
 
         public int UpdateService(Guid entityId, T entity)

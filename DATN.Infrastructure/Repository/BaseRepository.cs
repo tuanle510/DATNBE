@@ -66,6 +66,35 @@ namespace DATN.Infrastructure.Repository
         }
 
         /// <summary>
+        /// Xử lí thêm mới dữ liệu
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns> Số lượng bản ghi đã được thêm </returns>
+        public int Insert(T entity)
+        {
+            // Khỏi tạo câu lệnh 
+            var columnNames = "";
+            var columnParams = "";
+            var table = this.getTableName(typeof(T));
+            // Lấy ra tất cả các properties của class:
+            var properties = typeof(T).GetProperties();
+            foreach (var prop in properties)
+            {
+                // Tên của prop:
+                var propName = prop.Name;
+                // Bồ sung cột hiện tại vào chuỗi câu truy vấn cột dữ liệu:
+                columnNames += $" {propName},";
+                columnParams += $"@{propName},";
+            }
+            // Xóa dấu phẩy cuối cùng của chuỗi
+            columnNames = columnNames.Remove(columnNames.Length - 1, 1);
+            columnParams = columnParams.Remove(columnParams.Length - 1, 1);
+            var sql = $"INSERT INTO {table}({columnNames}) VALUES ({columnParams})";
+            var res = _sqlConnection.Execute(sql, param: entity);
+            return res;
+        }
+
+        /// <summary>
         /// Lấy tên table theo custom Attribute
         /// </summary>
         /// <param name="type"></param>

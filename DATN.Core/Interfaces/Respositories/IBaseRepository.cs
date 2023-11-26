@@ -28,7 +28,7 @@ namespace DATN.Core.Interfaces.Respositories
         /// </summary>
         /// <param name="entity"></param>
         /// <returns> Số lượng bản ghi đã được thêm </returns>
-        //int Insert(T entity);
+        int Insert(T entity);
 
         /// <summary>
         /// Xủ lí sửa 1 đối tượng theo id

@@ -20,6 +20,33 @@ namespace DATN.Core.Services
         }
 
         /// <summary>
+        /// Danh sách đã phân trang và lọc
+        /// </summary>
+        /// <param name="columns"></param>
+        /// <param name="take"></param>
+        /// <param name="skip"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public List<T> GetPaging(string columns, int take, int skip, string? filter)
+        {
+            return _baseRepository.GetPaging(columns, take, skip, filter);
+        }
+
+        /// <summary>
+        /// Tổng số bản ghi
+        /// </summary>
+        /// <param name="columns"></param>
+        /// <param name="take"></param>
+        /// <param name="skip"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public int GetPagingSum(string columns, int take, int skip, string? filter)
+        {
+            return _baseRepository.GetPagingSum(columns, take, skip, filter);
+        }
+
+        /// <summary>
         /// Lấy dữ liệu entity mói
         /// </summary>
         /// <returns></returns>
@@ -32,7 +59,6 @@ namespace DATN.Core.Services
             prop.SetValue(entity, Guid.NewGuid());
             return entity;
         }
-
 
         /// <summary>
         /// Xử lí nghiệp vụ chung khi thêm mới đối tượng

@@ -8,9 +8,16 @@ namespace DATN.Core.Params
 {
     public class FilterParam
     {
-        public string column { get; set; }
+        public string columns { get; set; }
         public string? filter { get; set; }
         public int take { get; set; }
         public int skip { get; set; }
     }
+    public class TotalParam
+    {
+        public int total { get; set; }
+
+    }
+
+
 }

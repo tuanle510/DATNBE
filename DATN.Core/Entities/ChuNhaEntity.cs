@@ -25,6 +25,8 @@ namespace DATN.Core.Entities
         public string? bank_account_name { get; set; }
         public string? bank_account_location { get; set; }
         public string? bank_name { get; set; }
+        public string? note { get; set; }
+
 
     }
 }

@@ -12,9 +12,27 @@ namespace DATN.Core.Interfaces.Respositories
         /// Xử lí lấy dữ liệu 
         /// </summary>
         /// <returns> Lấy tất cả bản ghi </returns>
-        List<T> Get(string column, string filter, int take, int skip);
+        List<T> Get(string columns, int take, int skip, string? filter);
 
+        /// <summary>
+        /// Danh sách đã phân trang và lọc
+        /// </summary>
+        /// <param name="columns"></param>
+        /// <param name="take"></param>
+        /// <param name="skip"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        List<T> GetPaging(string columns, int take, int skip, string? filter);
 
+        /// <summary>
+        /// Tổng số bản ghi
+        /// </summary>
+        /// <param name="columns"></param>
+        /// <param name="take"></param>
+        /// <param name="skip"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        int GetPagingSum(string columns, int take, int skip, string? filter);
 
         /// <summary>
         /// Xử lí lấy dữ liệu theo ID

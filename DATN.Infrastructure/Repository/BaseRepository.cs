@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Text;
 using DATN.Core.Attributes;
 using System.Reflection;
+using DATN.Core.Params;
 
 namespace DATN.Infrastructure.Repository
 {
@@ -30,18 +31,67 @@ namespace DATN.Infrastructure.Repository
         /// Xử lí lấy dữ liệu 
         /// </summary>
         /// <returns></returns>
-        public List<T> Get(string column, string? filter, int take, int skip)
+        public List<T> Get(string columns, int take, int skip, string? filter)
         {
             var table = this.getTableName(typeof(T));
-            //var tableName = Regex.Replace(typeof(T).Name.ToLower(), "entity", string.Empty);
             // Thực hiện khai báo câu lệnh truy vấn SQL:
-            var sqlCommand = $"SELECT * FROM { table }";
+            var sb = $"SELECT * FROM { table }";
 
             // Thực hiện câu truy vấn:
-            var entities = _sqlConnection.Query<T>(sqlCommand);
+            var entities = _sqlConnection.Query<T>(sb);
 
             // Trả về dữ liệu dạng List:
             return entities.ToList();
+        }
+
+        /// <summary>
+        /// Danh sách đã phân trang và lọc
+        /// </summary>
+        /// <param name="columns"></param>
+        /// <param name="take"></param>
+        /// <param name="skip"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public List<T> GetPaging(string columns, int take, int skip, string? filter)
+        {
+            var table = this.getTableName(typeof(T));
+            // Thực hiện khai báo câu lệnh truy vấn SQL:
+            var sb = $"SELECT { columns } FROM { table }";
+            sb += $" LIMIT @take";
+            if (skip > 0)
+            {
+                sb += $" OFFSET @skip";
+            }
+            var parameters = new DynamicParameters();
+            parameters.Add("@take", take);
+            parameters.Add("@skip", skip);
+
+            // Thực hiện câu truy vấn:
+            var entities = _sqlConnection.Query<T>(sb, param: parameters);
+
+            // Trả về dữ liệu dạng List:
+            return entities.ToList();
+        }
+
+        /// <summary>
+        /// Tổng số bản ghi
+        /// </summary>
+        /// <param name="columns"></param>
+        /// <param name="take"></param>
+        /// <param name="skip"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public int GetPagingSum(string columns, int take, int skip, string? filter)
+        {
+            var table = this.getTableName(typeof(T));
+            // Thực hiện khai báo câu lệnh truy vấn SQL:
+            var sb = $"SELECT COUNT( * ) AS total FROM { table }";
+
+            // Thực hiện câu truy vấn:
+            var entities = _sqlConnection.QueryFirstOrDefault<TotalParam>(sb);
+
+            // Trả về dữ liệu dạng List:
+            return entities?.total ?? 0;
         }
 
         /// <summary>
@@ -110,10 +160,10 @@ namespace DATN.Infrastructure.Repository
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        private string getPrimaryKey(Type type)
+        private string? getPrimaryKey(Type type)
         {
             var props = type.GetProperties().Where(e => e.IsDefined(typeof(PrimaryKey)));
-            return props.FirstOrDefault().Name;
+            return props?.FirstOrDefault()?.Name;
         }
     }
 }

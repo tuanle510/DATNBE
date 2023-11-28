@@ -15,6 +15,25 @@ namespace DATN.Core.Interfaces.Services
         T GetNew();
 
         /// <summary>
+        /// Danh sách đã phân trang và lọc
+        /// </summary>
+        /// <param name="columns"></param>
+        /// <param name="take"></param>
+        /// <param name="skip"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        List<T> GetPaging(string columns, int take, int skip, string? filter);
+        /// <summary>
+        /// Tổng số bản ghi
+        /// </summary>
+        /// <param name="columns"></param>
+        /// <param name="take"></param>
+        /// <param name="skip"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        int GetPagingSum(string columns, int take, int skip, string? filter);
+
+        /// <summary>
         /// Xử lí nghiệp vụ chung khi thêm mới đối tượng
         /// </summary>
         /// <param name="entity"> Đối tượng thêm mới </param>

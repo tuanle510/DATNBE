@@ -29,8 +29,18 @@ namespace MISA.Web03.API.Controllers
         {
             try
             {
-                var entitties = _baseRepository.Get(param.column, param.filter, param.take, param.skip);
-                return Ok(entitties);
+                // List data đã phân trang:
+                var data = _baseService.GetPaging(param.columns, param.take, param.skip, param.filter);
+                // Tổng số bản ghi khi chưa phân trang: 
+                var sum = _baseService.GetPagingSum(param.columns, param.take, param.skip, param.filter);
+                // trả về sữ liệu
+                var res = new
+                {
+                    Data = data,
+                    Sum = sum
+                };
+
+                return StatusCode(200, res);
             }
             catch (Exception ex)
             {
@@ -49,7 +59,7 @@ namespace MISA.Web03.API.Controllers
             {
                 var entitties = _baseService.GetNew();
                 return Ok(entitties);
-            }
+            }   
             catch (Exception ex)
             {
                 return HandleException(ex);

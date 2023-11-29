@@ -75,5 +75,18 @@ namespace DATN.Core.Services
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// Xử lí nghiệp vụ khi xóa
+        /// </summary>
+        /// <param name="entityId"></param>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public int DeleteService(List<Guid> param)
+        {
+            // Nếu không có lỗi thì thực hiện insert
+            return _baseRepository.Delete(param);
+        }
     }
 }

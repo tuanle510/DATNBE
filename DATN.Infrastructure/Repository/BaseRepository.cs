@@ -145,6 +145,26 @@ namespace DATN.Infrastructure.Repository
         }
 
         /// <summary>
+        /// Xử lí xóa
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public int Delete(List<Guid> param)
+        {
+            // Tạo dạy danh dách id cần xóa để truyền vào câu lệnh sql
+            var table = this.getTableName(typeof(T));
+            var key = this.getPrimaryKey(typeof(T));
+            var idList = "";
+            foreach (var item in param)
+            {
+                idList += $"'{item}',";
+            }
+            idList = idList.Remove(idList.Length - 1, 1);
+            var sqlQuerry = $"DELETE FROM {table} WHERE {key} IN ({idList})";
+            var res = _sqlConnection.Execute(sqlQuerry);
+            return res;
+        }
+        /// <summary>
         /// Lấy tên table theo custom Attribute
         /// </summary>
         /// <param name="type"></param>

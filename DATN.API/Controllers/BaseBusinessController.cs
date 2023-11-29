@@ -124,24 +124,24 @@ namespace MISA.Web03.API.Controllers
         //    }
         //}
 
-        /// <summary>
-        /// Xử lí xóa đối tượng theo Id
+        /// Xử lí xóa nhiều
         /// </summary>
-        /// <param name="entityId"> Id của đối tượng </param>
+        /// <param name="fixedAssetIdList"></param>
         /// <returns></returns>
-        //[HttpDelete("{entityId}")]
-        //public virtual IActionResult Delete(Guid entityId)
-        //{
-        //    try
-        //    {
-        //        var res = _baseRepository.Delete(entityId);
-        //        return StatusCode(200, res);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return HandleException(ex);
-        //    }
-        //}
+        [HttpDelete]
+        public IActionResult DeleteMulti([FromBody] List<Guid> param)
+
+        {
+            try
+            {
+                var res = _baseService.DeleteService(param);
+                return StatusCode(200, res);
+            }
+            catch (Exception ex)
+            {
+                return HandleException(ex);
+            }
+        }
         #endregion
 
 

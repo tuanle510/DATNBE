@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DATN.Core.Params;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,7 @@ namespace DATN.Core.Interfaces.Services
         /// <param name="skip"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        List<T> GetPaging(string columns, int take, int skip, string? filter);
+        Task<List<T>> GetPaging(string columns, int take, int skip, string? filter);
         /// <summary>
         /// Tổng số bản ghi
         /// </summary>
@@ -54,6 +55,6 @@ namespace DATN.Core.Interfaces.Services
         /// <param name="entityId"></param>
         /// <param name="entity"></param>
         /// <returns></returns>
-        int DeleteService(List<Guid> param);
+        List<ValidateError> DeleteService(List<Guid> param);
     }
 }

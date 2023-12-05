@@ -2,6 +2,7 @@
 using DATN.Core.Interfaces.Respositories;
 using DATN.Core.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
+using DATN.Core.Exceptions;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -25,12 +26,12 @@ namespace MISA.Web03.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("list")]
-        public virtual IActionResult Get([FromBody] FilterParam param)
+        public virtual async Task<IActionResult> Get([FromBody] FilterParam param)
         {
             try
             {
                 // List data đã phân trang:
-                var data = _baseService.GetPaging(param.columns, param.take, param.skip, param.filter);
+                var data = await _baseService.GetPaging(param.columns, param.take, param.skip, param.filter);
                 // Tổng số bản ghi khi chưa phân trang: 
                 var sum = _baseService.GetPagingSum(param.columns, param.take, param.skip, param.filter);
                 // trả về sữ liệu
@@ -129,18 +130,11 @@ namespace MISA.Web03.API.Controllers
         /// <param name="fixedAssetIdList"></param>
         /// <returns></returns>
         [HttpDelete]
-        public IActionResult DeleteMulti([FromBody] List<Guid> param)
+        public IActionResult Delete([FromBody] List<Guid> param)
 
         {
-            try
-            {
-                var res = _baseService.DeleteService(param);
-                return StatusCode(200, res);
-            }
-            catch (Exception ex)
-            {
-                return HandleException(ex);
-            }
+            var res = _baseService.DeleteService(param);
+            return Ok(res);
         }
         #endregion
 
@@ -151,16 +145,19 @@ namespace MISA.Web03.API.Controllers
         /// <param name="ex"></param>
         /// <returns> Thông tin lỗi Exception </returns>
         /// CreatedBy: LTTUAN (09/05/2022)
-        private IActionResult HandleException(Exception ex)
+        protected IActionResult HandleException(Exception ex)
         {
             var res = new
             {
                 devMsg = ex.Message,
-                userMsg = "Có lỗi xấy ra vui lòng liên hệ MISA để được hỗ trợ 2",
+                userMsg = "Có lỗi xấy ra vui lòng liên hệ MISA để được hỗ trợ",
                 errorCode = "001",
                 data = ex.Data
             };
-            return StatusCode(400, res); //Lỗi từ server trả về 500
+            if (ex is BusinessException)
+                return StatusCode(200, res); //Lỗi từ server trả về 500
+            else
+                return StatusCode(500, res);
         }
     }
 }

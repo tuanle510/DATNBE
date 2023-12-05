@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,7 @@ namespace DATN.Core.Interfaces.Respositories
         /// <param name="skip"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        List<T> GetPaging(string columns, int take, int skip, string? filter);
+        Task<List<T>> GetPaging(string columns, int take, int skip, string? filter);
 
         /// <summary>
         /// Tổng số bản ghi
@@ -61,6 +62,8 @@ namespace DATN.Core.Interfaces.Respositories
         /// </summary>
         /// <param name="entityId"> id của đối tượng cần xóa</param>
         /// <returns> số lượng bản ghi đã được xóa </returns>
-        int Delete(List<Guid> param);
+        int Delete(Guid param);
+
+        bool CheckArise(Guid param);
     }
 }

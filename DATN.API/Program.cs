@@ -38,8 +38,8 @@ builder.Services.AddScoped<IChuNhaRepository, ChuNhaRepository>();
 builder.Services.AddScoped<IChuNhaService, ChuNhaService>();
 builder.Services.AddScoped<ICanHoRepository, CanHoRepository>();
 builder.Services.AddScoped<ICanHoService, CanHoService>();
-//builder.Services.AddScoped<IFixedAssetCategoryRepository, FixedAssetCategoryRepository>();
-//builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+builder.Services.AddScoped<IKhachHangRepository, KhachHangRepository>();
+builder.Services.AddScoped<IKhachHangService, KhachHangService>();
 
 
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));

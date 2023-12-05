@@ -1,6 +1,8 @@
 ﻿using DATN.Core.Attributes;
+using DATN.Core.Exceptions;
 using DATN.Core.Interfaces.Respositories;
 using DATN.Core.Interfaces.Services;
+using DATN.Core.Params;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -28,9 +30,9 @@ namespace DATN.Core.Services
         /// <param name="filter"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public List<T> GetPaging(string columns, int take, int skip, string? filter)
+        public async Task<List<T>> GetPaging(string columns, int take, int skip, string? filter)
         {
-            return _baseRepository.GetPaging(columns, take, skip, filter);
+            return await _baseRepository.GetPaging(columns, take, skip, filter);
         }
 
         /// <summary>
@@ -83,10 +85,62 @@ namespace DATN.Core.Services
         /// <param name="entity"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public int DeleteService(List<Guid> param)
+        public List<ValidateError> DeleteService(List<Guid> param)
         {
-            // Nếu không có lỗi thì thực hiện insert
-            return _baseRepository.Delete(param);
+            var errList = new List<ValidateError>();
+            for (int i = 0; i < param.Count; i++)
+            {
+                try
+                {
+                    this.DeleteAsync(param[i]);
+                }
+                catch (BusinessException ex)
+                {
+                    errList.Add(
+                        new ValidateError
+                        {
+                            Index = i,
+                            Data = ex.ErrorData,
+                            Code = ex.ErrorCode,
+                        }
+                     );
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            return errList;
+
+            //Nếu không có lỗi thì thực hiện insert
+            //var count = 0;
+            //for (int i = 0; i < param.Count; i++)
+            //{
+            //    return _baseRepository.Delete(param[i]);
+            //    count++;
+            //}
+            //return count;
+        }
+
+        private void DeleteAsync(Guid guid)
+        {
+            // validate trước khi xóa
+            this.validateBeforeDelete(guid);
+            // Sự kiện xóa
+            _baseRepository.Delete(guid);
+        }
+
+        private void validateBeforeDelete(Guid guid)
+        {
+            throw new BusinessException()
+            {
+                ErrorMsg = "VALIDATE",
+                ErrorCode = "VALIDATE",
+                ErrorData = new
+                {
+                    id = guid
+                }
+            };
         }
     }
 }

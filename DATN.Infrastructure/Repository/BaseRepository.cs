@@ -7,6 +7,7 @@ using System.Text;
 using DATN.Core.Attributes;
 using System.Reflection;
 using DATN.Core.Params;
+using System.Collections;
 
 namespace DATN.Infrastructure.Repository
 {
@@ -52,7 +53,7 @@ namespace DATN.Infrastructure.Repository
         /// <param name="skip"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public List<T> GetPaging(string columns, int take, int skip, string? filter)
+        public async Task<List<T>> GetPaging(string columns, int take, int skip, string? filter)
         {
             var table = this.getTableName(typeof(T));
             // Thực hiện khai báo câu lệnh truy vấn SQL:
@@ -67,7 +68,7 @@ namespace DATN.Infrastructure.Repository
             parameters.Add("@skip", skip);
 
             // Thực hiện câu truy vấn:
-            var entities = _sqlConnection.Query<T>(sb, param: parameters);
+            var entities = await _sqlConnection.QueryAsync<T>(sb, param: parameters);
 
             // Trả về dữ liệu dạng List:
             return entities.ToList();
@@ -149,19 +150,14 @@ namespace DATN.Infrastructure.Repository
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        public int Delete(List<Guid> param)
+        public int Delete(Guid param)
         {
-            // Tạo dạy danh dách id cần xóa để truyền vào câu lệnh sql
             var table = this.getTableName(typeof(T));
             var key = this.getPrimaryKey(typeof(T));
-            var idList = "";
-            foreach (var item in param)
-            {
-                idList += $"'{item}',";
-            }
-            idList = idList.Remove(idList.Length - 1, 1);
-            var sqlQuerry = $"DELETE FROM {table} WHERE {key} IN ({idList})";
-            var res = _sqlConnection.Execute(sqlQuerry);
+            var parameters = new DynamicParameters();
+            parameters.Add($"@{key}", param);
+            var sqlQuerry = $"DELETE FROM {table} WHERE {key} = @{key}";
+            var res = _sqlConnection.Execute(sqlQuerry, param: parameters);
             return res;
         }
         /// <summary>
@@ -184,6 +180,13 @@ namespace DATN.Infrastructure.Repository
         {
             var props = type.GetProperties().Where(e => e.IsDefined(typeof(PrimaryKey)));
             return props?.FirstOrDefault()?.Name;
+        }
+
+        public bool CheckArise(Guid param)
+        {
+            var sqlQuerry = $"SELECT * FROM chu_nha";
+            var res = _sqlConnection.Query<object>(sqlQuerry);
+            return false;
         }
     }
 }

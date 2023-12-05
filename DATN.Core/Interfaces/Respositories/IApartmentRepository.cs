@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DATN.Core.Interfaces.Respositories
 {
-    public interface ICanHoRepository : IBaseRepository<CanHoEntity>
+    public interface IApartmentRepository : IBaseRepository<ApartmentEntity>
     {
     }
 }

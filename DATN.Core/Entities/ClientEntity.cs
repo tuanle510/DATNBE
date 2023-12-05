@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace DATN.Core.Entities
 {
     [TableName("client")]
-    public class KhachHangEntity
+    public class ClientEntity
     {
         [PrimaryKey]
         public Guid client_id { get; set; }

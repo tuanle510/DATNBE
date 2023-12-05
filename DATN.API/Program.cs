@@ -34,12 +34,12 @@ builder.Services.AddMvc()
     });
 
 // Cấu hình Dependency Injection:
-builder.Services.AddScoped<IChuNhaRepository, ChuNhaRepository>();
-builder.Services.AddScoped<IChuNhaService, ChuNhaService>();
-builder.Services.AddScoped<ICanHoRepository, CanHoRepository>();
-builder.Services.AddScoped<ICanHoService, CanHoService>();
-builder.Services.AddScoped<IKhachHangRepository, KhachHangRepository>();
-builder.Services.AddScoped<IKhachHangService, KhachHangService>();
+builder.Services.AddScoped<IOwnerRepository, OwnerRepository>();
+builder.Services.AddScoped<IOwnerService, OwnerService>();
+builder.Services.AddScoped<IApartmentRepository, ApartmentRepository>();
+builder.Services.AddScoped<IApartmentService, ApartmentService>();
+builder.Services.AddScoped<IClientRepository, ClientRepository>();
+builder.Services.AddScoped<IClientService, ClientService>();
 
 
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));

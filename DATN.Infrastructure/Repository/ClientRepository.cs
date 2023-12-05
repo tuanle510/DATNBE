@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace DATN.Infrastructure.Repository
 {
-    public class ChuNhaRepository : BaseRepository<ChuNhaEntity>, IChuNhaRepository
+    public class ClientRepository : BaseRepository<ClientEntity>, IClientRepository
     {
-        public ChuNhaRepository(IConfiguration configuration) : base(configuration)
+        public ClientRepository(IConfiguration configuration) : base(configuration)
         {
 
         }

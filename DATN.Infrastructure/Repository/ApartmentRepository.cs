@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace DATN.Infrastructure.Repository
 {
-    public class CanHoRepository : BaseRepository<CanHoEntity>, ICanHoRepository
+    public class ApartmentRepository : BaseRepository<ApartmentEntity>, IApartmentRepository
     {
-        public CanHoRepository(IConfiguration configuration) : base(configuration)
+        public ApartmentRepository(IConfiguration configuration) : base(configuration)
         {
 
         }

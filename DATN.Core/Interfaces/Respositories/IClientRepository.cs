@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DATN.Core.Interfaces.Respositories
 {
-    public interface IChuNhaRepository : IBaseRepository<ChuNhaEntity>
+    public interface IClientRepository : IBaseRepository<ClientEntity>
     {
     }
 }

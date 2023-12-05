@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DATN.Core.Interfaces.Services
 {
-    public interface ICanHoService : IBaseService<CanHoEntity>
+    public interface IApartmentService : IBaseService<ApartmentEntity>
     {
     }
 }

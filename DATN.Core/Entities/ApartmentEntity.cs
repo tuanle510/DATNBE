@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace DATN.Core.Entities
 {
-    [TableName("can_ho")]
-    public class CanHoEntity
+    [TableName("apartment")]
+    public class ApartmentEntity
     {
         /// <summary>
         /// Khóa chính

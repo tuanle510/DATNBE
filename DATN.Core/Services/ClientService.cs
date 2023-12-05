@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace DATN.Core.Services
 {
-    public class ChuNhaService : BaseService<ChuNhaEntity>, IChuNhaService
+    public class ClientService : BaseService<ClientEntity>, IClientService
     {
-        IChuNhaRepository _ChuNhatRepository;
-        public ChuNhaService(IChuNhaRepository ChuNhaRepository) : base(ChuNhaRepository)
+        IClientRepository _KhachHangtRepository;
+        public ClientService(IClientRepository KhachHangRepository) : base(KhachHangRepository)
         {
-            _ChuNhatRepository = ChuNhaRepository;
+            _KhachHangtRepository = KhachHangRepository;
         }
     }
 }

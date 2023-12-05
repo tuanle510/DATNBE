@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace DATN.Core.Services
 {
-    public class CanHoService : BaseService<CanHoEntity>, ICanHoService
+    public class ApartmentService : BaseService<ApartmentEntity>, IApartmentService
     {
-        ICanHoRepository _CanHoRepository;
-        public CanHoService(ICanHoRepository CanHoRepository) : base(CanHoRepository)
+        IApartmentRepository _CanHoRepository;
+        public ApartmentService(IApartmentRepository CanHoRepository) : base(CanHoRepository)
         {
             _CanHoRepository = CanHoRepository;
         }

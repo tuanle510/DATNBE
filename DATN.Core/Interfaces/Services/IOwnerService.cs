@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DATN.Core.Interfaces.Services
 {
-    public interface IKhachHangService : IBaseService<KhachHangEntity>
+    public interface IOwnerService : IBaseService<OwnerEntity>
     {
     }
 }

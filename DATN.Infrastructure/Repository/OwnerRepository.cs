@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace DATN.Infrastructure.Repository
 {
-    public class KhachHangRepository : BaseRepository<ClientEntity>, IKhachHangRepository
+    public class OwnerRepository : BaseRepository<OwnerEntity>, IOwnerRepository
     {
-        public KhachHangRepository(IConfiguration configuration) : base(configuration)
-    {
+        public OwnerRepository(IConfiguration configuration) : base(configuration)
+        {
 
+        }
     }
-}
 }

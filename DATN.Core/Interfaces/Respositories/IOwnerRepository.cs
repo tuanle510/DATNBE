@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DATN.Core.Interfaces.Respositories
 {
-    public interface IKhachHangRepository : IBaseRepository<KhachHangEntity>
+    public interface IOwnerRepository : IBaseRepository<OwnerEntity>
     {
     }
 }

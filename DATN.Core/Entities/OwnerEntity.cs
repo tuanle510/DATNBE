@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace DATN.Core.Entities
 {
-    [TableName("chu_nha")]
-    public class ChuNhaEntity
+    [TableName("owner")]
+    public class OwnerEntity
     {
         [PrimaryKey]
         public Guid owner_id { get; set; }
@@ -26,7 +26,5 @@ namespace DATN.Core.Entities
         public string? bank_account_location { get; set; }
         public string? bank_name { get; set; }
         public string? note { get; set; }
-
-
     }
 }

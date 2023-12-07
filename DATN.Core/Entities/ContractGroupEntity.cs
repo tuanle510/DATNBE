@@ -15,10 +15,10 @@ namespace DATN.Core.Entities
 
         public string contract_group_name { get; set; }
 
-        public Guid apartment_id { get; set; }
+        public Guid? apartment_id { get; set; }
         public string apartment_name { get; set; }
 
-        public Guid owner_id { get; set; }
+        public Guid? owner_id { get; set; }
         public string owner_name { get; set; }
     }
 }

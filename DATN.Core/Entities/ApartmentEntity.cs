@@ -23,7 +23,7 @@ namespace DATN.Core.Entities
         /// <summary>
         /// id chủ sở hữu
         /// </summary>
-        public Guid owner_id { get; set; }
+        public Guid? owner_id { get; set; }
         /// <summary>
         /// Tên chủ sở hữu
         /// </summary>
@@ -31,19 +31,19 @@ namespace DATN.Core.Entities
         /// <summary>
         /// id Tòa nhà 
         /// </summary>
-        public Guid building_id { get; set; }
+        public Guid? building_id { get; set; }
         /// <summary>
         /// Tên tòa nhà
         /// </summary>
-        public string building_name { get; set; }
+        public string? building_name { get; set; }
         /// <summary>
         /// Ghi chú
         /// </summary>
-        public string note { get; set; }
+        public string? note { get; set; }
         /// <summary>
         /// Mô tả
         /// </summary>
-        public string description { get; set; }
+        public string? description { get; set; }
 
     }
 }

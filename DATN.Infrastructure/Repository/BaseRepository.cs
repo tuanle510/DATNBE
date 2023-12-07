@@ -164,6 +164,32 @@ namespace DATN.Infrastructure.Repository
             var res = _sqlConnection.Execute(sqlQuerry, param: parameters);
             return res;
         }
+
+        public async Task<List<object>> GetComboboxData(string columns, int take, int skip, string? filter)
+        {
+            var table = this.getTableName(typeof(T));
+            // Thực hiện khai báo câu lệnh truy vấn SQL:
+            var sb = $"SELECT { columns } FROM { table }";
+            // Nếu bằng -1 thì take all
+            if (take != -1)
+            {
+                sb += $" LIMIT @take";
+            }
+            if (skip > 0)
+            {
+                sb += $" OFFSET @skip";
+            }
+            var parameters = new DynamicParameters();
+            parameters.Add("@take", take);
+            parameters.Add("@skip", skip);
+
+            // Thực hiện câu truy vấn:
+            var entities = await _sqlConnection.QueryAsync<object>(sb, param: parameters);
+
+            // Trả về dữ liệu dạng List:
+            return entities.ToList();
+        }
+
         /// <summary>
         /// Lấy tên table theo custom Attribute
         /// </summary>

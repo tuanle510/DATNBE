@@ -34,6 +34,19 @@ namespace DATN.Core.Services
         {
             return await _baseRepository.GetPaging(columns, take, skip, filter);
         }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="columns"></param>
+        /// <param name="take"></param>
+        /// <param name="skip"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public async Task<List<object>> GetComboboxData(string columns, int take, int skip, string? filter)
+        {
+            return await _baseRepository.GetComboboxData(columns, take, skip, filter);
+        }
 
         /// <summary>
         /// Tổng số bản ghi
@@ -57,8 +70,17 @@ namespace DATN.Core.Services
             Type type = typeof(T);
             T entity = (T)Activator.CreateInstance(type);
             var properties = typeof(T).GetProperties();
-            var prop = type.GetProperties().Where(e => e.IsDefined(typeof(PrimaryKey))).FirstOrDefault();
-            prop.SetValue(entity, Guid.NewGuid());
+            foreach (var prop in type.GetProperties().Where(e => e.PropertyType == typeof(Guid) || e.PropertyType == typeof(Guid?)))
+            {
+                if (prop.IsDefined(typeof(PrimaryKey)))
+                {
+                    prop.SetValue(entity, Guid.NewGuid());
+                }
+                else
+                {
+                    prop.SetValue(entity, null);
+                }
+            }
             return entity;
         }
 

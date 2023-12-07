@@ -147,7 +147,7 @@ namespace MISA.Web03.API.Controllers
             try
             {
                 // List data đã phân trang:
-                var data = await _baseService.GetPaging(param.columns, param.take, param.skip, param.filter);
+                var data = await _baseService.GetComboboxData(param.columns, param.take, param.skip, param.filter);
                 return StatusCode(200, data);
             }
             catch (Exception ex)

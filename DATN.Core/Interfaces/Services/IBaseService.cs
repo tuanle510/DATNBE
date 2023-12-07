@@ -24,6 +24,7 @@ namespace DATN.Core.Interfaces.Services
         /// <param name="filter"></param>
         /// <returns></returns>
         Task<List<T>> GetPaging(string columns, int take, int skip, string? filter);
+        Task<List<object>> GetComboboxData(string columns, int take, int skip, string? filter);
         /// <summary>
         /// Tổng số bản ghi
         /// </summary>

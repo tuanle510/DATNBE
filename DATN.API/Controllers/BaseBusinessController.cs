@@ -136,6 +136,25 @@ namespace MISA.Web03.API.Controllers
             var res = _baseService.DeleteService(param);
             return Ok(res);
         }
+
+        /// <summary>
+        /// Xử lí lấy tất cả dữ liệu
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("combobox")]
+        public virtual async Task<IActionResult> GetComboboxData([FromBody] FilterParam param)
+        {
+            try
+            {
+                // List data đã phân trang:
+                var data = await _baseService.GetPaging(param.columns, param.take, param.skip, param.filter);
+                return StatusCode(200, data);
+            }
+            catch (Exception ex)
+            {
+                return HandleException(ex);
+            }
+        }
         #endregion
 
 
@@ -150,7 +169,7 @@ namespace MISA.Web03.API.Controllers
             var res = new
             {
                 devMsg = ex.Message,
-                userMsg = "Có lỗi xấy ra vui lòng liên hệ MISA để được hỗ trợ",
+                userMsg = "Có lỗi xấy ra vui lòng liên hệ LTTUAN để được hỗ trợ",
                 errorCode = "001",
                 data = ex.Data
             };

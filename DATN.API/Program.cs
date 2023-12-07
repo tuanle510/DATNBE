@@ -40,6 +40,8 @@ builder.Services.AddScoped<IApartmentRepository, ApartmentRepository>();
 builder.Services.AddScoped<IApartmentService, ApartmentService>();
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<IContractGroupRepository, ContractGroupRepository>();
+builder.Services.AddScoped<IContractGroupService, ContractGroupService>();
 
 
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));

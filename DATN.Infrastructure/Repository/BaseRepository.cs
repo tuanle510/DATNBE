@@ -58,7 +58,11 @@ namespace DATN.Infrastructure.Repository
             var table = this.getTableName(typeof(T));
             // Thực hiện khai báo câu lệnh truy vấn SQL:
             var sb = $"SELECT { columns } FROM { table }";
-            sb += $" LIMIT @take";
+            // Nếu bằng -1 thì take all
+            if (take != -1)
+            {
+                sb += $" LIMIT @take";
+            }
             if (skip > 0)
             {
                 sb += $" OFFSET @skip";

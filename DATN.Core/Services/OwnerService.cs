@@ -11,10 +11,10 @@ namespace DATN.Core.Services
 {
     public class OwnerService : BaseService<OwnerEntity>, IOwnerService
     {
-        IOwnerRepository _ChuNhatRepository;
-        public OwnerService(IOwnerRepository ChuNhaRepository) : base(ChuNhaRepository)
+        IOwnerRepository _ownerRepository;
+        public OwnerService(IOwnerRepository ownerRepository) : base(ownerRepository)
         {
-            _ChuNhatRepository = ChuNhaRepository;
+            _ownerRepository = ownerRepository;
         }
     }
 }

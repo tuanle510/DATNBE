@@ -11,10 +11,10 @@ namespace DATN.Core.Services
 {
     public class ClientService : BaseService<ClientEntity>, IClientService
     {
-        IClientRepository _KhachHangtRepository;
-        public ClientService(IClientRepository KhachHangRepository) : base(KhachHangRepository)
+        IClientRepository _clienttRepository;
+        public ClientService(IClientRepository clientRepository) : base(clientRepository)
         {
-            _KhachHangtRepository = KhachHangRepository;
+            _clienttRepository = clientRepository;
         }
     }
 }

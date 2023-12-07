@@ -11,10 +11,10 @@ namespace DATN.Core.Services
 {
     public class ApartmentService : BaseService<ApartmentEntity>, IApartmentService
     {
-        IApartmentRepository _CanHoRepository;
-        public ApartmentService(IApartmentRepository CanHoRepository) : base(CanHoRepository)
+        IApartmentRepository _apartmentRepository;
+        public ApartmentService(IApartmentRepository apartmentRepository) : base(apartmentRepository)
         {
-            _CanHoRepository = CanHoRepository;
+            _apartmentRepository = apartmentRepository;
         }
     }
 }

@@ -131,8 +131,8 @@ namespace DATN.Infrastructure.Repository
             var columnNames = "";
             var columnParams = "";
             var table = this.getTableName(typeof(T));
-            // Lấy ra tất cả các properties của class:
-            var properties = typeof(T).GetProperties();
+            // Lấy ra tất cả các properties trừ các prop đánh dấu là Ignore của entity:
+            var properties = typeof(T).GetProperties().Where(x => !x.IsDefined(typeof(Ignore)));
             foreach (var prop in properties)
             {
                 // Tên của prop:

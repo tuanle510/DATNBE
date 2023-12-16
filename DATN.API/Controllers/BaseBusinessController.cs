@@ -73,7 +73,7 @@ namespace MISA.Web03.API.Controllers
         /// <param name="entityId"></param>
         /// <returns></returns>
         [HttpGet("{entityId}")]
-        public IActionResult Get(Guid entityId)
+        public virtual IActionResult Get(Guid entityId)
         {
             try
             {

@@ -9,5 +9,11 @@ namespace DATN.Core.Interfaces.Respositories
 {
     public interface IContractRepository : IBaseRepository<ContractEntity>
     {
+        /// <summary>
+        /// Lấy danh sách hợp đồng theo id bộ hồ sơ
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        List<ContractEntity> GetByMasterId(Guid id);
     }
 }

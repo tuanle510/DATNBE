@@ -15,8 +15,8 @@ namespace DATN.Core.Entities
         /// <summary>
         /// Căn hộ
         /// </summary>
-        public string apartment_id { get; set; }
-        public string apartment_name { get; set; }
+        public Guid? apartment_id { get; set; }
+        public string? apartment_name { get; set; }
         /// <summary>
         /// Chủ nhà
         /// </summary>
@@ -26,24 +26,24 @@ namespace DATN.Core.Entities
         /// Bộ hồ sơ
         /// </summary>
         public Guid? contract_group_id { get; set; }
-        public string contract_group_name { get; set; }
+        public string? contract_group_name { get; set; }
         /// <summary>
         /// Khách hàng
         /// </summary>
-        public string client_id { get; set; }
-        public string client_name { get; set; }
+        public Guid? client_id { get; set; }
+        public string? client_name { get; set; }
         /// <summary>
         /// Giá thuê / tháng
         /// </summary>
-        public decimal unit_price { get; set; }  
+        public decimal? unit_price { get; set; }  
         /// <summary>
         /// Tiền cọc
         /// </summary>
-        public decimal deposit_amount { get; set; }
+        public decimal? deposit_amount { get; set; }
         /// <summary>
         /// Điều  kiện ra hạn
         /// </summary>
-        public string extension_condition { get; set; }
+        public string? extension_condition { get; set; }
         /// <summary>
         /// Ngày bắt đầu hợp đồng
         /// </summary>
@@ -55,7 +55,7 @@ namespace DATN.Core.Entities
         /// <summary>
         /// Kỳ thanh toán (Bao lâu thanh toán 1 lần)
         /// </summary>
-        public int payment_period { get; set; }
+        public int? payment_period { get; set; }
         /// <summary>
         /// Ngày nhận nhà
         /// </summary>
@@ -67,7 +67,7 @@ namespace DATN.Core.Entities
         /// <summary>
         /// Ghi chú
         /// </summary>
-        public string note { get; set; }
+        public string? note { get; set; }
             
     }
 }

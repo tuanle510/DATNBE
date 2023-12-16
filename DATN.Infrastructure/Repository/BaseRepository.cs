@@ -195,7 +195,7 @@ namespace DATN.Infrastructure.Repository
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        private string getTableName(Type type)
+        protected string getTableName(Type type)
         {
             TableName? attribute = Attribute.GetCustomAttribute(type, typeof(TableName)) as TableName;
             return attribute != null ? attribute.Name : "";
@@ -206,7 +206,7 @@ namespace DATN.Infrastructure.Repository
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        private string? getPrimaryKey(Type type)
+        protected string? getPrimaryKey(Type type)
         {
             var props = type.GetProperties().Where(e => e.IsDefined(typeof(PrimaryKey)));
             return props?.FirstOrDefault()?.Name;

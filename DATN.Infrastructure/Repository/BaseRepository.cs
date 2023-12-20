@@ -202,6 +202,35 @@ namespace DATN.Infrastructure.Repository
         }
 
         /// <summary>
+        /// Xủ lí sửa 1 đối tượng theo id
+        /// </summary>
+        /// <param name="entityId"> id đối tượng cần xóa </param>
+        /// <param name="entity"> bản ghi đã được sửa </param>
+        /// <returns> số lượng bản ghi đã được sửa  </returns>
+        public int Update(T entity)
+        {
+            // Khỏi tạo câu lệnh 
+            var setParams = "";
+            var table = this.getTableName(typeof(T));
+            var key = this.getPrimaryKey(typeof(T));
+            // Lấy ra tất cả các properties trừ các prop đánh dấu là Ignore của entity:
+            var properties = typeof(T).GetProperties().Where(x => !x.IsDefined(typeof(Ignore))).Where(x=> !x.IsDefined(typeof(PrimaryKey)));
+            foreach (var prop in properties)
+            {
+                // Tên của prop:
+                var propName = prop.Name;
+                // Giá trị của prop:
+                var propValue = prop.GetValue(entity);
+                setParams += $"{propName} = @{propName},";
+            }
+            // Xóa dấu phẩy cuối cùng của chuỗi
+            setParams = setParams.Remove(setParams.Length - 1, 1);
+            var sqlCommand = $"UPDATE {table} SET {setParams} WHERE  {key} = @{key}";
+            var res = _sqlConnection.Execute(sqlCommand, param: entity);
+            return res;
+        }
+
+        /// <summary>
         /// Lấy khóa chính
         /// </summary>
         /// <param name="type"></param>

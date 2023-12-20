@@ -48,7 +48,7 @@ namespace DATN.Core.Interfaces.Services
         /// <param name="entityId"> Id của đối tượng </param>
         /// <param name="entity"> đối tượng đã sửa </param>
         /// <returns></returns>
-        int UpdateService(Guid entityId, T entity);
+        int UpdateService(T entity);
 
         /// <summary>
         /// Xử lí nghiệp vụ khi xóa

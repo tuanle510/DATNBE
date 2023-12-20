@@ -91,13 +91,31 @@ namespace DATN.Core.Services
         /// <returns> Số lượng bản ghi </returns>
         public int InsertService(T entity)
         {
+            // Gán giá trị mới cho thuộc tính created_date
+            PropertyInfo? propInfo = typeof(T).GetProperty("created_date");
+            if (propInfo != null && propInfo.CanWrite)
+            {
+                propInfo.SetValue(entity, DateTime.Now);
+            }
             // Nếu không có lỗi thì thực hiện insert
             return _baseRepository.Insert(entity);
         }
 
-        public int UpdateService(Guid entityId, T entity)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public int UpdateService(T entity)
         {
-            throw new NotImplementedException();
+            // Gán giá trị mới cho thuộc tính created_date
+            PropertyInfo? propInfo = typeof(T).GetProperty("modified_date");
+            if (propInfo != null && propInfo.CanWrite)
+            {
+                propInfo.SetValue(entity, DateTime.Now);
+            }
+            // Nếu không có lỗi thì thực hiện sửa
+            return _baseRepository.Update(entity);
         }
 
         /// <summary>

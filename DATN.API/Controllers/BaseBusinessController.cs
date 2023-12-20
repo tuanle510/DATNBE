@@ -111,19 +111,19 @@ namespace MISA.Web03.API.Controllers
         /// <param name="entityId"> Id của đôi tượng </param>
         /// <param name="entity"> Dữ liệu mới </param>
         /// <returns></returns>
-        //[HttpPut("{entityId}")]
-        //public virtual IActionResult Put(Guid entityId, [FromBody] T entity)
-        //{
-        //    try
-        //    {
-        //        var res = _baseService.UpdateService(entityId, entity);
-        //        return StatusCode(200, res);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return HandleException(ex);
-        //    }
-        //}
+        [HttpPut]
+        public virtual IActionResult Put([FromBody] T entity)
+        {
+            try
+            {
+                var res = _baseService.UpdateService(entity);
+                return StatusCode(200, res);
+            }
+            catch (Exception ex)
+            {
+                return HandleException(ex);
+            }
+        }
 
         /// Xử lí xóa nhiều
         /// </summary>

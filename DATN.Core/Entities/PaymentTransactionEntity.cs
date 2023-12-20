@@ -40,6 +40,7 @@ namespace DATN.Core.Entities
         /// Ngày thanh toán dự định
         /// </summary>
         public DateTime? expected_payment_date { get; set; }
+        public DateTime? real_payment_date { get; set; }
         /// <summary>
         /// Trạng thái
         /// </summary>
@@ -54,6 +55,10 @@ namespace DATN.Core.Entities
         /// </summary>
         public Guid? receive_id { get; set; }
         public string? receiver_name { get; set; }
+        public DateTime? created_date { get; set; }
+        public string? created_by { get; set; }
+        public DateTime? modified_date { get; set; }
+        public string? modified_by { get; set; }
         /// <summary>
         /// Trạng thái thêm/sửa/xóa
         /// </summary>

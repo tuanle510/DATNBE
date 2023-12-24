@@ -34,7 +34,7 @@ namespace DATN.Core.Services
         {
             return await _baseRepository.GetPaging(columns, take, skip, filter);
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -151,15 +151,6 @@ namespace DATN.Core.Services
                 }
             }
             return errList;
-
-            //Nếu không có lỗi thì thực hiện insert
-            //var count = 0;
-            //for (int i = 0; i < param.Count; i++)
-            //{
-            //    return _baseRepository.Delete(param[i]);
-            //    count++;
-            //}
-            //return count;
         }
 
         private void DeleteAsync(Guid guid)
@@ -172,15 +163,20 @@ namespace DATN.Core.Services
 
         private void validateBeforeDelete(Guid guid)
         {
-            throw new BusinessException()
+            var isArise = _baseRepository.CheckArise(guid);
+            // Nếu có phát sinh thì không xóa được
+            if (isArise)
             {
-                ErrorMsg = "VALIDATE",
-                ErrorCode = "VALIDATE",
-                ErrorData = new
+                throw new BusinessException()
                 {
-                    id = guid
-                }
-            };
+                    ErrorMsg = "VALIDATE",
+                    ErrorCode = "VALIDATE",
+                    ErrorData = new
+                    {
+                        id = guid
+                    }
+                };
+            }
         }
     }
 }

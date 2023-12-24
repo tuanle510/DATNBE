@@ -225,7 +225,7 @@ namespace DATN.Infrastructure.Repository
             }
             // Xóa dấu phẩy cuối cùng của chuỗi
             setParams = setParams.Remove(setParams.Length - 1, 1);
-            var sqlCommand = $"UPDATE {table} SET {setParams} WHERE  {key} = @{key}";
+            var sqlCommand = $"UPDATE {table} SET {setParams} WHERE {key} = @{key}";
             var res = _sqlConnection.Execute(sqlCommand, param: entity);
             return res;
         }
@@ -243,9 +243,12 @@ namespace DATN.Infrastructure.Repository
 
         public bool CheckArise(Guid param)
         {
-            var sqlQuerry = $"SELECT * FROM chu_nha";
-            var res = _sqlConnection.Query<object>(sqlQuerry);
-            return false;
+            var key = this.getPrimaryKey(typeof(T));
+            var sqlQuerry = $"SELECT {key} FROM contract_group WHERE {key} = @{key}";
+            var parameters = new DynamicParameters();
+            parameters.Add($"@{key}", param);
+            var res = _sqlConnection.Query<object>(sqlQuerry, param: parameters);
+            return res.ToList().Count > 0 ;
         }
     }
 }

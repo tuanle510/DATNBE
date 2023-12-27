@@ -15,5 +15,15 @@ namespace DATN.Infrastructure.Repository
         {
 
         }
+
+        /// <summary>
+        /// màn này không check 
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public override bool CheckArise(Guid param)
+        {
+            return false;
+        }
     }
 }

@@ -241,14 +241,14 @@ namespace DATN.Infrastructure.Repository
             return props?.FirstOrDefault()?.Name;
         }
 
-        public bool CheckArise(Guid param)
+        public virtual bool CheckArise(Guid param)
         {
             var key = this.getPrimaryKey(typeof(T));
-            var sqlQuerry = $"SELECT {key} FROM contract_group WHERE {key} = @{key}";
+            var sqlQuerry = $"SELECT {key} FROM contract WHERE {key} = @{key}";
             var parameters = new DynamicParameters();
             parameters.Add($"@{key}", param);
             var res = _sqlConnection.Query<object>(sqlQuerry, param: parameters);
-            return res.ToList().Count > 0 ;
+            return res.ToList().Count > 0;
         }
     }
 }

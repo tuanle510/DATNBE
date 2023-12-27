@@ -13,7 +13,7 @@ namespace DATN.Core.Entities
         [PrimaryKey]
         public Guid client_id { get; set; }
         public string? client_name { get; set; }
-        public DateTime birthdate { get; set; }
+        public DateTime? birthdate { get; set; }
         public string? phone_number { get; set; }
         public string? email { get; set; }
         /// <summary>
@@ -43,7 +43,7 @@ namespace DATN.Core.Entities
         /// Giấy tờ
         /// </summary>
         public string? paper_number { get; set; }
-        public DateTime paper_date { get; set; }
+        public DateTime? paper_date { get; set; }
         public string? paper_place { get; set; }
         public string? note { get; set; }
         public DateTime? created_date { get; set; }

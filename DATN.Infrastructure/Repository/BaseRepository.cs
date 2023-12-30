@@ -57,7 +57,7 @@ namespace DATN.Infrastructure.Repository
         {
             var table = this.getTableName(typeof(T));
             // Thực hiện khai báo câu lệnh truy vấn SQL:
-            var sb = $"SELECT { columns } FROM { table }";
+            var sb = $"SELECT { columns } FROM { table } ORDER BY created_date DESC";
             // Nếu bằng -1 thì take all
             if (take != -1)
             {

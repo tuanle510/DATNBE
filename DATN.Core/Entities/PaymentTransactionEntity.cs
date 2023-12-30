@@ -63,7 +63,7 @@ namespace DATN.Core.Entities
         /// Trạng thái thêm/sửa/xóa
         /// </summary>
         [Ignore]
-        public string? mode { get; set; }
+        public string? state { get; set; }
 
     }
 }

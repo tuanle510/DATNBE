@@ -25,6 +25,11 @@ namespace DATN.API.Controllers
             _paymentTransactionRepository = paymentTransactionRepository;
         }
 
+        /// <summary>
+        ///  Thêm mới
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
         [HttpPost("custom")]
         public IActionResult Post(ContractParam param)
         {
@@ -45,6 +50,43 @@ namespace DATN.API.Controllers
                 return HandleException(ex);
             }
         }
+        
+        /// <summary>
+        ///  Thêm mới
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        [HttpPut("custom")]
+        public IActionResult Put(ContractParam param)
+        {
+            try
+            {
+                var res = _contractService.UpdateService(param.master);
+                if (param.details != null && param.details.Count > 0)
+                {
+                    for (int i = 0; i < param.details.Count; i++)
+                    {
+                        switch (param.details[i].state)
+                        {
+                            case "insert":
+                                _paymentTransactionService.InsertService(param.details[i]);
+                                break;
+                            case "update":
+                                _paymentTransactionService.UpdateService(param.details[i]);
+                                break;
+                            case "delete":
+                                _paymentTransactionService.DeleteService(new List<Guid>() { param.details[i].payment_transaction_id });
+                                break;
+                        }
+                    }
+                }
+                return StatusCode(200, res);
+            }
+            catch (Exception ex)
+            {
+                return HandleException(ex);
+            }
+        }
 
         /// <summary>
         /// Xử lí lấy dữ liệu về theo Id
@@ -58,6 +100,14 @@ namespace DATN.API.Controllers
             {
                 var master = _contractRepository.GetById(entityId);
                 var details = _paymentTransactionRepository.GetByMasterId(entityId);
+                // Gán thêm trạng thái là không làm gì 
+                if (details.Count > 0)
+                {
+                    foreach (var item in details)
+                    {
+                        item.state = "None";
+                    }
+                }
                 var res = new ContractParam()
                 {
                     master = master,

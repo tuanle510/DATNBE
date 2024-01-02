@@ -105,7 +105,7 @@ namespace DATN.API.Controllers
                 {
                     foreach (var item in details)
                     {
-                        item.state = "None";
+                        item.state = "none";
                     }
                 }
                 var res = new ContractParam()

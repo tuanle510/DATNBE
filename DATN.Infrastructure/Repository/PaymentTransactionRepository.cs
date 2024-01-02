@@ -26,7 +26,7 @@ namespace DATN.Infrastructure.Repository
         {
             var table = this.getTableName(typeof(PaymentTransactionEntity));
             // Thực hiện khai báo câu lệnh truy vấn SQL:
-            var sqlQuery = $"SELECT * FROM {table} WHERE {nameof(PaymentTransactionEntity.contract_id)} = @id ORDER BY {nameof(PaymentTransactionEntity.start_date)}";
+            var sqlQuery = $"SELECT * FROM {table} WHERE {nameof(PaymentTransactionEntity.contract_id)} = @id ORDER BY {nameof(PaymentTransactionEntity.sort_order)}";
             var parameters = new DynamicParameters();
             parameters.Add("@id", id);
 
@@ -35,6 +35,10 @@ namespace DATN.Infrastructure.Repository
 
             // Trả về dữ liệu dạng List:
             return entities.ToList();
+        }
+        public override bool CheckArise(Guid param)
+        {
+            return false;
         }
     }
 }

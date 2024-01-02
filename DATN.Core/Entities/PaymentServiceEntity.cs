@@ -7,19 +7,24 @@ using System.Threading.Tasks;
 
 namespace DATN.Core.Entities
 {
-    [TableName("payment_transaction")]
-    public class PaymentTransactionEntity
+    [TableName("payment_service")]
+    public class PaymentServiceEntity
     {
         [PrimaryKey]
-        public Guid payment_transaction_id { get; set; }
+        public Guid payment_service_id { get; set; }
         /// <summary>
         /// Mã hợp đồng
         /// </summary>
         public Guid? contract_id { get; set; }
         /// <summary>
+        /// Dịch vụ
+        /// </summary>
+        public Guid? service_id { get; set; }
+        public string? service_name { get; set; }
+        /// <summary>
         /// Đợt thanh toán
         /// </summary>
-        public string? payment_batch { get; set; }
+        public string? payment_period { get; set; }
         /// <summary>
         /// Số tiền
         /// </summary>
@@ -28,14 +33,6 @@ namespace DATN.Core.Entities
         /// GHi chú
         /// </summary>
         public string? note { get; set; }
-        /// <summary>
-        /// Ngày bắt đầu kỳ thành toán
-        /// </summary>
-        public DateTime? start_date { get; set; }
-        /// <summary>
-        /// Ngày kết thúc kỳ thành toán
-        /// </summary>
-        public DateTime? end_date { get; set; }
         /// <summary>
         /// Ngày thanh toán dự định
         /// </summary>
@@ -46,15 +43,10 @@ namespace DATN.Core.Entities
         /// </summary>
         public string? status { get; set; }
         /// <summary>
-        /// Người gửi
+        /// Người thanh toán
         /// </summary>
         public string? sender_id { get; set; }
         public string? sender_name { get; set; }
-        /// <summary>
-        /// Người nhận
-        /// </summary>
-        public Guid? receive_id { get; set; }
-        public string? receiver_name { get; set; }
         /// <summary>
         /// THứ tự lưu
         /// </summary>

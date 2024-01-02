@@ -46,6 +46,16 @@ builder.Services.AddScoped<IContractGroupRepository, ContractGroupRepository>();
 builder.Services.AddScoped<IContractGroupService, ContractGroupService>();
 builder.Services.AddScoped<IContractRepository, ContractRepository>();
 builder.Services.AddScoped<IContractService, ContractService>();
+
+builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
+builder.Services.AddScoped<IServiceService, ServiceService>();
+
+builder.Services.AddScoped<IContractServiceRepository, ContractServiceRepository>();
+builder.Services.AddScoped<IContractServiceService, ContractServiceService>();
+
+builder.Services.AddScoped<IPaymentServiceRepository, PaymentServiceRepository>();
+builder.Services.AddScoped<IPaymentServiceService, PaymentServiceService>();
+
 builder.Services.AddScoped<IPaymentTransactionRepository, PaymentTransactionRepository>();
 builder.Services.AddScoped<IPaymentTransactionService, PaymentTransactionService>();
 

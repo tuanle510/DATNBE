@@ -24,7 +24,7 @@ namespace DATN.Core.Entities
         /// <summary>
         /// Đợt thanh toán
         /// </summary>
-        public string? payment_period { get; set; }
+        public string? payment_batch { get; set; }
         /// <summary>
         /// Số tiền
         /// </summary>

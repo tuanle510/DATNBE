@@ -9,5 +9,6 @@ namespace DATN.Core.Interfaces.Respositories
 {
     public interface IContractServiceRepository : IBaseRepository<ContractServiceEntity>
     {
+        List<ContractServiceEntity> GetByMasterId(Guid id);
     }
 }

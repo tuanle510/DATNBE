@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DATN.Core.Entities
 {
-    [TableName("service")]
+    [TableName("contract_service")]
     public class ContractServiceEntity
     {
         [PrimaryKey]
@@ -32,6 +32,7 @@ namespace DATN.Core.Entities
         /// Ghi chú
         /// </summary>
         public string? note { get; set; }
+        public int? sort_order { get; set; }
         /// <summary>
         /// Trạng thái thêm/sửa/xóa
         /// </summary>

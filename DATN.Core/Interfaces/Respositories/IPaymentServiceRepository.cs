@@ -9,5 +9,6 @@ namespace DATN.Core.Interfaces.Respositories
 {
     public interface IPaymentServiceRepository : IBaseRepository<PaymentServiceEntity>
     {
+        List<PaymentServiceEntity> GetByMasterId(Guid id);
     }
 }

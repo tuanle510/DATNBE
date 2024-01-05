@@ -4,6 +4,7 @@ using DATN.Core.Interfaces.Services;
 using DATN.Core.Params;
 using Microsoft.AspNetCore.Mvc;
 using MISA.Web03.API.Controllers;
+using System.Transactions;
 
 namespace DATN.API.Controllers
 {
@@ -51,40 +52,50 @@ namespace DATN.API.Controllers
         [HttpPost("custom")]
         public IActionResult Post(ContractParam param)
         {
-            try
+            using (var transactionScope = new TransactionScope())
             {
-                var res = _contractService.InsertService(param.master);
-                if (param.details != null && param.details.Count > 0)
+                try
                 {
-                    for (int i = 0; i < param.details.Count; i++)
+                    var res = _contractService.InsertService(param.master);
+
+                    if (param.details != null && param.details.Count > 0)
                     {
-                        _paymentTransactionService.InsertService(param.details[i]);
+                        for (int i = 0; i < param.details.Count; i++)
+                        {
+                            _paymentTransactionService.InsertService(param.details[i]);
+                        }
                     }
-                }      
-                
-                if (param.detailsService != null && param.detailsService.Count > 0)
-                {
-                    for (int i = 0; i < param.detailsService.Count; i++)
+
+                    if (param.detailsService != null && param.detailsService.Count > 0)
                     {
-                        _paymentServiceService.InsertService(param.detailsService[i]);
+                        for (int i = 0; i < param.detailsService.Count; i++)
+                        {
+                            _paymentServiceService.InsertService(param.detailsService[i]);
+                        }
                     }
-                }     
-                
-                if (param.service != null && param.service.Count > 0)
-                {
-                    for (int i = 0; i < param.service.Count; i++)
+
+                    if (param.service != null && param.service.Count > 0)
                     {
-                        _contractServiceService.InsertService(param.service[i]);
+                        for (int i = 0; i < param.service.Count; i++)
+                        {
+                            _contractServiceService.InsertService(param.service[i]);
+                        }
                     }
+
+                    // Nếu tất cả các dịch vụ đã được thực hiện mà không có lỗi nào xảy ra,
+                    // thì commit giao dịch để lưu thay đổi vào cơ sở dữ liệu.
+                    transactionScope.Complete();
+                    return StatusCode(201, res);
                 }
-                return StatusCode(201, res);
-            }
-            catch (Exception ex)
-            {
-                return HandleException(ex);
+                catch (Exception ex)
+                {
+                    // Nếu có bất kỳ lỗi nào xảy ra, giao dịch sẽ bị rollback
+                    transactionScope.Dispose(); // Thực hiện rollback giao dịch
+                    return HandleException(ex);
+                }
             }
         }
-        
+
         /// <summary>
         ///  Thêm mới
         /// </summary>

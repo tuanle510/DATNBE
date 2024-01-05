@@ -12,9 +12,31 @@ namespace DATN.Core.Services
     public class ContractService : BaseService<ContractEntity>, IContractService
     {
         IContractRepository _contractRepository;
-        public ContractService(IContractRepository contractRepository) : base(contractRepository)
+        IContractServiceRepository _contractServiceRepository;
+        IPaymentServiceRepository _paymentServiceRepository;
+        IPaymentTransactionRepository _paymentTransactionRepository;
+
+        public ContractService(
+            IContractRepository contractRepository,
+            IContractServiceRepository contractServiceRepository,
+            IPaymentServiceRepository paymentServiceRepository,
+            IPaymentTransactionRepository paymentTransactionRepository) : base(contractRepository)
         {
             _contractRepository = contractRepository;
+            _contractServiceRepository = contractServiceRepository;
+            _paymentServiceRepository = paymentServiceRepository;
+            _paymentTransactionRepository = paymentTransactionRepository;
+         }
+
+        /// <summary>
+        /// thò ra hàm xóa detail
+        /// </summary>
+        /// <param name="guid"></param>
+        public override void deleteDetail(Guid guid)
+        {
+            _contractServiceRepository.DeleteByMasterId(guid);
+            _paymentServiceRepository.DeleteByMasterId(guid);
+            _paymentTransactionRepository.DeleteByMasterId(guid);
         }
     }
 }

@@ -165,6 +165,22 @@ namespace DATN.Infrastructure.Repository
             return res;
         }
 
+        /// <summary>
+        /// Xóa theo masterId
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public int DeleteByMasterId(Guid param)
+        {
+            var table = this.getTableName(typeof(T));
+            var key = this.getPrimaryKey(typeof(T));
+            var parameters = new DynamicParameters();
+            parameters.Add($"@{key}", param);
+            var sqlQuerry = $"DELETE FROM {table} WHERE {key} = @{key}";
+            var res = _sqlConnection.Execute(sqlQuerry, param: parameters);
+            return res;
+        }
+
         public async Task<List<object>> GetComboboxData(string columns, int take, int skip, string? filter)
         {
             var table = this.getTableName(typeof(T));
@@ -238,6 +254,17 @@ namespace DATN.Infrastructure.Repository
         protected string? getPrimaryKey(Type type)
         {
             var props = type.GetProperties().Where(e => e.IsDefined(typeof(PrimaryKey)));
+            return props?.FirstOrDefault()?.Name;
+        }
+        
+        /// <summary>
+        /// Lấy khóa chính
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        protected string? getMasterKey(Type type)
+        {
+            var props = type.GetProperties().Where(e => e.IsDefined(typeof(MasterKey)));
             return props?.FirstOrDefault()?.Name;
         }
 

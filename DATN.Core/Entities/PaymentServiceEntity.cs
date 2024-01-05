@@ -15,6 +15,7 @@ namespace DATN.Core.Entities
         /// <summary>
         /// Mã hợp đồng
         /// </summary>
+        [MasterKey]
         public Guid? contract_id { get; set; }
         /// <summary>
         /// Dịch vụ

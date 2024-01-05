@@ -35,5 +35,16 @@ namespace DATN.Infrastructure.Repository
             // Trả về dữ liệu dạng List:
             return entities.ToList();
         }
+
+        /// <summary>
+        /// màn này không check 
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public override bool CheckArise(Guid param)
+        {
+            return false;
+        }
+
     }
 }

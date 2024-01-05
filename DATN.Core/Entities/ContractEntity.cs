@@ -25,6 +25,7 @@ namespace DATN.Core.Entities
         /// <summary>
         /// Bộ hồ sơ
         /// </summary>
+        [MasterKey]
         public Guid? contract_group_id { get; set; }
         public string? contract_group_name { get; set; }
         /// <summary>

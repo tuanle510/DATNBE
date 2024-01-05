@@ -10,7 +10,12 @@ namespace DATN.Core.Attributes
     public class PrimaryKey : Attribute
     {
     }
-    
+
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Method, AllowMultiple = false)]
+    public class MasterKey : Attribute
+    {
+    }
+
     /// <summary>
     /// Các trường thông tin không lưu xuống db
     /// </summary>

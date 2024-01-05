@@ -21,7 +21,7 @@ namespace DATN.Infrastructure.Repository
         {
             var table = this.getTableName(typeof(PaymentServiceEntity));
             // Thực hiện khai báo câu lệnh truy vấn SQL:
-            var sqlQuery = $"SELECT * FROM {table} WHERE {nameof(PaymentServiceEntity.contract_id)} = @id ORDER BY {nameof(PaymentServiceEntity.sort_order)}";
+            var sqlQuery = $"SELECT * FROM {table} WHERE {nameof(PaymentServiceEntity.contract_id)} = @id ORDER BY {nameof(PaymentServiceEntity.expected_payment_date)}";
             var parameters = new DynamicParameters();
             parameters.Add("@id", id);
 

@@ -159,6 +159,16 @@ namespace DATN.Core.Services
             this.validateBeforeDelete(guid);
             // Sự kiện xóa
             _baseRepository.Delete(guid);
+
+            this.deleteDetail(guid);
+        }
+
+        /// <summary>
+        /// thò ra hàm xóa detail
+        /// </summary>
+        /// <param name="guid"></param>
+        public virtual void deleteDetail(Guid guid)
+        {
         }
 
         private void validateBeforeDelete(Guid guid)

@@ -73,6 +73,12 @@ namespace DATN.Core.Interfaces.Respositories
         /// <param name="entityId"> id của đối tượng cần xóa</param>
         /// <returns> số lượng bản ghi đã được xóa </returns>
         int Delete(Guid param);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        int DeleteByMasterId(Guid param);
 
         bool CheckArise(Guid param);
     }

@@ -28,15 +28,15 @@ namespace DATN.Core.Services
         /// thò ra hàm xóa detail
         /// </summary>
         /// <param name="guid"></param>
-        public override void deleteDetail(Guid guid)
-        {
-            var details = _contractRepository.GetByMasterId(guid);
-            var listId = new List<Guid>();
-            foreach (var item in details)
-            {
-                listId.Add(item.contract_id);
-            }
-            _contractService.DeleteService(listId);
-        }
+        //public override void deleteDetail(Guid guid)
+        //{
+        //    var details = _contractRepository.GetByMasterId(guid);
+        //    var listId = new List<Guid>();
+        //    foreach (var item in details)
+        //    {
+        //        listId.Add(item.contract_id);
+        //    }
+        //    _contractService.DeleteService(listId);
+        //}
     }
 }

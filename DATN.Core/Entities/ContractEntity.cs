@@ -13,6 +13,10 @@ namespace DATN.Core.Entities
         [PrimaryKey]
         public Guid contract_id { get; set; }
         /// <summary>
+        /// Loại hợp đ
+        /// </summary>
+        public string? contract_type { get; set; }
+        /// <summary>
         /// Căn hộ
         /// </summary>
         public Guid? apartment_id { get; set; }
@@ -22,6 +26,13 @@ namespace DATN.Core.Entities
         /// </summary>
         public Guid? owner_id { get; set; }
         public string? owner_name { get; set; }
+
+        /// <summary>
+        /// Tên công ty
+        /// </summary>
+        public string? company_name { get; set; }
+        
+
         /// <summary>
         /// Bộ hồ sơ
         /// </summary>

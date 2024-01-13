@@ -32,11 +32,11 @@ namespace DATN.Core.Services
         /// thò ra hàm xóa detail
         /// </summary>
         /// <param name="guid"></param>
-        public override void deleteDetail(Guid guid)
-        {
-            _contractServiceRepository.DeleteByMasterId(guid);
-            _paymentServiceRepository.DeleteByMasterId(guid);
-            _paymentTransactionRepository.DeleteByMasterId(guid);
-        }
+        //public override void deleteDetail(Guid guid)
+        //{
+        //    _contractServiceRepository.DeleteByMasterId(guid);
+        //    _paymentServiceRepository.DeleteByMasterId(guid);
+        //    _paymentTransactionRepository.DeleteByMasterId(guid);
+        //}
     }
 }

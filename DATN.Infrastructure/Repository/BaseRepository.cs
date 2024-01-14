@@ -53,11 +53,18 @@ namespace DATN.Infrastructure.Repository
         /// <param name="skip"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public async Task<List<T>> GetPaging(string columns, int take, int skip, string? filter)
+        public async Task<List<T>> GetPaging(string columns, int take, int skip, List<Filter>? filter)
         {
             var table = this.getTableName(typeof(T));
+            var parameters = new DynamicParameters();
+            var where = this.buildWhere(filter, parameters);
             // Thực hiện khai báo câu lệnh truy vấn SQL:
-            var sb = $"SELECT { columns } FROM { table } ORDER BY created_date DESC";
+            var sb = $"SELECT { columns } FROM { table } ";
+            if (!string.IsNullOrEmpty(where))
+            {
+                sb += $" where {where}";
+            }
+            sb += " ORDER BY created_date DESC ";
             // Nếu bằng -1 thì take all
             if (take != -1)
             {
@@ -67,7 +74,6 @@ namespace DATN.Infrastructure.Repository
             {
                 sb += $" OFFSET @skip";
             }
-            var parameters = new DynamicParameters();
             parameters.Add("@take", take);
             parameters.Add("@skip", skip);
 
@@ -86,14 +92,19 @@ namespace DATN.Infrastructure.Repository
         /// <param name="skip"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public int GetPagingSum(string columns, int take, int skip, string? filter)
+        public int GetPagingSum(string columns, int take, int skip, List<Filter>? filter)
         {
             var table = this.getTableName(typeof(T));
+            var parameters = new DynamicParameters();
+            var where = this.buildWhere(filter, parameters);
             // Thực hiện khai báo câu lệnh truy vấn SQL:
             var sb = $"SELECT COUNT( * ) AS total FROM { table }";
-
+            if (!string.IsNullOrEmpty(where))
+            {
+                sb += $" where {where}";
+            }
             // Thực hiện câu truy vấn:
-            var entities = _sqlConnection.QueryFirstOrDefault<TotalParam>(sb);
+            var entities = _sqlConnection.QueryFirstOrDefault<TotalParam>(sb, param: parameters);
 
             // Trả về dữ liệu dạng List:
             return entities?.total ?? 0;
@@ -207,17 +218,6 @@ namespace DATN.Infrastructure.Repository
         }
 
         /// <summary>
-        /// Lấy tên table theo custom Attribute
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        protected string getTableName(Type type)
-        {
-            TableName? attribute = Attribute.GetCustomAttribute(type, typeof(TableName)) as TableName;
-            return attribute != null ? attribute.Name : "";
-        }
-
-        /// <summary>
         /// Xủ lí sửa 1 đối tượng theo id
         /// </summary>
         /// <param name="entityId"> id đối tượng cần xóa </param>
@@ -230,7 +230,7 @@ namespace DATN.Infrastructure.Repository
             var table = this.getTableName(typeof(T));
             var key = this.getPrimaryKey(typeof(T));
             // Lấy ra tất cả các properties trừ các prop đánh dấu là Ignore của entity:
-            var properties = typeof(T).GetProperties().Where(x => !x.IsDefined(typeof(Ignore))).Where(x=> !x.IsDefined(typeof(PrimaryKey)));
+            var properties = typeof(T).GetProperties().Where(x => !x.IsDefined(typeof(Ignore))).Where(x => !x.IsDefined(typeof(PrimaryKey)));
             foreach (var prop in properties)
             {
                 // Tên của prop:
@@ -247,6 +247,17 @@ namespace DATN.Infrastructure.Repository
         }
 
         /// <summary>
+        /// Lấy tên table theo custom Attribute
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        protected string getTableName(Type type)
+        {
+            TableName? attribute = Attribute.GetCustomAttribute(type, typeof(TableName)) as TableName;
+            return attribute != null ? attribute.Name : "";
+        }
+
+        /// <summary>
         /// Lấy khóa chính
         /// </summary>
         /// <param name="type"></param>
@@ -256,7 +267,7 @@ namespace DATN.Infrastructure.Repository
             var props = type.GetProperties().Where(e => e.IsDefined(typeof(PrimaryKey)));
             return props?.FirstOrDefault()?.Name;
         }
-        
+
         /// <summary>
         /// Lấy khóa chính
         /// </summary>
@@ -268,6 +279,38 @@ namespace DATN.Infrastructure.Repository
             return props?.FirstOrDefault()?.Name;
         }
 
+        protected string? buildWhere(List<Filter> filter, DynamicParameters param)
+        {
+            var where = new StringBuilder();
+            if (filter != null)
+            {
+                for (int i = 0; i < filter.Count; i++)
+                {
+                    switch (filter[i].op)
+                    {
+                        case "=":
+                            where.Append($"{filter[i].field} = @{filter[i].field}");
+                            break;
+                        default:
+                            where.Append($"{filter[i].field} like CONCAT('%',@{filter[i].field},'%')");
+                            break;
+                    }
+                    if (i < filter.Count - 1)
+                    {
+                        where.Append(" AND ");
+                    }
+                    param.Add($"@{filter[i].field}", filter[i].value);
+                }
+            }
+            return where.ToString();
+        }
+
+
+        /// <summary>
+        /// Check phát sinh
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
         public virtual bool CheckArise(Guid param)
         {
             var key = this.getPrimaryKey(typeof(T));

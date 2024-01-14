@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DATN.Core.Params;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,17 @@ namespace DATN.Core.Interfaces.Respositories
         /// <param name="skip"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        Task<List<T>> GetPaging(string columns, int take, int skip, string? filter);
+        Task<List<T>> GetPaging(string columns, int take, int skip, List<Filter>? filter);
+
+        /// <summary>
+        /// Tổng số bản ghi
+        /// </summary>
+        /// <param name="columns"></param>
+        /// <param name="take"></param>
+        /// <param name="skip"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        int GetPagingSum(string columns, int take, int skip, List<Filter>? filter);
 
         /// <summary>
         /// 
@@ -35,15 +46,6 @@ namespace DATN.Core.Interfaces.Respositories
         /// <returns></returns>
         Task<List<object>> GetComboboxData(string columns, int take, int skip, string? filter);
 
-        /// <summary>
-        /// Tổng số bản ghi
-        /// </summary>
-        /// <param name="columns"></param>
-        /// <param name="take"></param>
-        /// <param name="skip"></param>
-        /// <param name="filter"></param>
-        /// <returns></returns>
-        int GetPagingSum(string columns, int take, int skip, string? filter);
 
         /// <summary>
         /// Xử lí lấy dữ liệu theo ID

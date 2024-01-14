@@ -23,8 +23,7 @@ namespace DATN.Core.Interfaces.Services
         /// <param name="skip"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        Task<List<T>> GetPaging(string columns, int take, int skip, string? filter);
-        Task<List<object>> GetComboboxData(string columns, int take, int skip, string? filter);
+        Task<List<T>> GetPaging(string columns, int take, int skip, List<Filter>? filter);
         /// <summary>
         /// Tổng số bản ghi
         /// </summary>
@@ -33,7 +32,18 @@ namespace DATN.Core.Interfaces.Services
         /// <param name="skip"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        int GetPagingSum(string columns, int take, int skip, string? filter);
+        int GetPagingSum(string columns, int take, int skip, List<Filter>? filter);
+
+        /// <summary>
+        /// Danh sách combobox
+        /// </summary>
+        /// <param name="columns"></param>
+        /// <param name="take"></param>
+        /// <param name="skip"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+
+        Task<List<object>> GetComboboxData(string columns, int take, int skip, string? filter);
 
         /// <summary>
         /// Xử lí nghiệp vụ chung khi thêm mới đối tượng

@@ -1,9 +1,12 @@
 ﻿using DATN.Core.Entities;
+using DATN.Core.Params;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace DATN.API.Controllers
@@ -25,9 +28,16 @@ namespace DATN.API.Controllers
         /// <param name="user"></param>
         /// <returns></returns>
         //POST api/<UsersController>
+        private readonly IConfiguration _configuration;
+
+        public AuthController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         [HttpPost("Login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login([FromBody] AuthEntiry login)
+        public async Task<IActionResult> Login([FromBody] LoginParam login)
         {
             try
             {
@@ -36,27 +46,8 @@ namespace DATN.API.Controllers
                 {
                     return BadRequest();
                 }
-
-                var claims = new List<Claim>
-                {
-
-                    new Claim(ClaimTypes.Email, "oklea"),
-                    //new Claim(ClaimTypes.Email, user.email),
-                    //new Claim("FirstName", user.FirstName),
-                    //new Claim("LastName", user.LastName),
-                    //new Claim("Username", user.Username),
-
-                };
-
-                var claimsIdentity = new ClaimsIdentity(
-                    claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-                await HttpContext.SignInAsync(
-                    CookieAuthenticationDefaults.AuthenticationScheme,
-                    new ClaimsPrincipal(claimsIdentity)
-                    );
-
-                return Ok(user);
+                string token = CreateToken(user);
+                return Ok(token);
             }
             catch (Exception)
             {
@@ -66,7 +57,33 @@ namespace DATN.API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Tạo token
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        private string CreateToken(AuthEntiry user)
+        {
+            List<Claim> claims = new List<Claim>
+            {
+                new Claim (ClaimTypes.Name, user.user_name),
+                //new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                //new Claim("user_id", user.user_id.ToString()),
+                //new Claim("email", user.email)
+            };
+            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var token = new JwtSecurityToken(
+                claims: claims,
+                expires: DateTime.Now.AddDays(1),
+                signingCredentials: creds
+            );
+            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+            return jwt;
+        }
+
+
+        /// <summary>
+        /// Đăng xuất
         /// </summary>
         /// <returns></returns>
         [HttpGet("logout")]
@@ -89,13 +106,13 @@ namespace DATN.API.Controllers
         {
             // TODO: mã hóa password, làm thêm task (bất đồng độ)
             // băm hash256, check key 
-            if (email == "user@mail" && password == "12345")
+            if (email == "string" && password == "string")
             {
                 return new AuthEntiry()
                 {
                     //Email = "user@mail",
                     //FirstName = "Lê",
-                    //LastName = "Tuấn",
+                    user_name = "Tuấn",
                     //Username = "Tit"
                 };
             }

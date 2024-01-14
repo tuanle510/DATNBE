@@ -3,12 +3,14 @@ using DATN.Core.Interfaces.Respositories;
 using DATN.Core.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using DATN.Core.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MISA.Web03.API.Controllers
 {
     [Route("api/v1/[controller]")]
+    [Authorize]
     [ApiController]
     public class BaseBusinessController<T> : ControllerBase
     {
@@ -142,7 +144,7 @@ namespace MISA.Web03.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("combobox")]
-        public virtual async Task<IActionResult> GetComboboxData([FromBody] FilterParam param)
+        public virtual async Task<IActionResult> GetComboboxData([FromBody] FilterComhboboxParam param)
         {
             try
             {

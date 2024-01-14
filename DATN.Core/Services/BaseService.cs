@@ -30,9 +30,22 @@ namespace DATN.Core.Services
         /// <param name="filter"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<List<T>> GetPaging(string columns, int take, int skip, string? filter)
+        public async Task<List<T>> GetPaging(string columns, int take, int skip, List<Filter>? filter)
         {
             return await _baseRepository.GetPaging(columns, take, skip, filter);
+        }
+
+        /// <summary>
+        /// Tổng số bản ghi
+        /// </summary>
+        /// <param name="columns"></param>
+        /// <param name="take"></param>
+        /// <param name="skip"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public int GetPagingSum(string columns, int take, int skip, List<Filter>? filter)
+        {
+            return _baseRepository.GetPagingSum(columns, take, skip, filter);
         }
 
         /// <summary>
@@ -46,19 +59,6 @@ namespace DATN.Core.Services
         public async Task<List<object>> GetComboboxData(string columns, int take, int skip, string? filter)
         {
             return await _baseRepository.GetComboboxData(columns, take, skip, filter);
-        }
-
-        /// <summary>
-        /// Tổng số bản ghi
-        /// </summary>
-        /// <param name="columns"></param>
-        /// <param name="take"></param>
-        /// <param name="skip"></param>
-        /// <param name="filter"></param>
-        /// <returns></returns>
-        public int GetPagingSum(string columns, int take, int skip, string? filter)
-        {
-            return _baseRepository.GetPagingSum(columns, take, skip, filter);
         }
 
         /// <summary>

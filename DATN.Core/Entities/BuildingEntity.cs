@@ -8,15 +8,17 @@ using System.Threading.Tasks;
 namespace DATN.Core.Entities
 {
     [TableName("building")]
-    public class BuildingEntity
+    public class BuildingEntity : BaseEntity
     {
         [PrimaryKey]
         public Guid building_id { get; set; }
         public string? building_name { get; set; }
         public string? building_address { get; set; }
-        public DateTime? created_date { get; set; }
-        public string? created_by { get; set; }
-        public DateTime? modified_date { get; set; }
-        public string? modified_by { get; set; }
+        public string? province_code { get; set; }
+        public string? province_name { get; set; }
+        public string? district_code { get; set; }
+        public string? district_name { get; set; }
+        public string? ward_code { get; set; }
+        public string? ward_name { get; set; }
     }
 }

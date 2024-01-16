@@ -44,7 +44,7 @@ namespace DATN.Core.Interfaces.Respositories
         /// <param name="skip"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        Task<List<object>> GetComboboxData(string columns, int take, int skip, string? filter);
+        Task<List<object>> GetComboboxData(string columns, int take, int skip, List<Filter>? filter);
 
 
         /// <summary>

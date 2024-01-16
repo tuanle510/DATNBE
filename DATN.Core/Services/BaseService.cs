@@ -56,7 +56,7 @@ namespace DATN.Core.Services
         /// <param name="skip"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public async Task<List<object>> GetComboboxData(string columns, int take, int skip, string? filter)
+        public async Task<List<object>> GetComboboxData(string columns, int take, int skip, List<Filter>? filter)
         {
             return await _baseRepository.GetComboboxData(columns, take, skip, filter);
         }

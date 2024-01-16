@@ -79,8 +79,8 @@ namespace MISA.Web03.API.Controllers
         {
             try
             {
-                var entitties = _baseRepository.GetById(entityId);
-                return Ok(entitties);
+                var res = _baseRepository.GetById(entityId);
+                return Ok(res);
             }
             catch (Exception ex)
             {
@@ -144,7 +144,7 @@ namespace MISA.Web03.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("combobox")]
-        public virtual async Task<IActionResult> GetComboboxData([FromBody] FilterComhboboxParam param)
+        public virtual async Task<IActionResult> GetComboboxData([FromBody] FilterParam param)
         {
             try
             {

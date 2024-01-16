@@ -43,7 +43,7 @@ namespace DATN.Core.Interfaces.Services
         /// <param name="filter"></param>
         /// <returns></returns>
 
-        Task<List<object>> GetComboboxData(string columns, int take, int skip, string? filter);
+        Task<List<object>> GetComboboxData(string columns, int take, int skip, List<Filter>? filter);
 
         /// <summary>
         /// Xử lí nghiệp vụ chung khi thêm mới đối tượng

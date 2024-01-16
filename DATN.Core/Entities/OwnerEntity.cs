@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace DATN.Core.Entities
 {
     [TableName("owner")]
-    public class OwnerEntity
+    public class OwnerEntity : BaseEntity
     {
         [PrimaryKey]
         public Guid owner_id { get; set; }
@@ -25,9 +25,5 @@ namespace DATN.Core.Entities
         public string? bank_account_name { get; set; }
         public string? bank_account_location { get; set; }
         public string? note { get; set; }
-        public DateTime? created_date { get; set; }
-        public string? created_by { get; set; }
-        public DateTime? modified_date { get; set; }
-        public string? modified_by { get; set; }
     }
 }

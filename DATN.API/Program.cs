@@ -84,6 +84,16 @@ builder.Services.AddScoped<IPaymentServiceService, PaymentServiceService>();
 builder.Services.AddScoped<IPaymentTransactionRepository, PaymentTransactionRepository>();
 builder.Services.AddScoped<IPaymentTransactionService, PaymentTransactionService>();
 
+//
+builder.Services.AddScoped<IProvinceRepository, ProvinceRepository>();
+builder.Services.AddScoped<IProvinceService, ProvinceService>();
+
+builder.Services.AddScoped<IWardRepository, WardRepository>();
+builder.Services.AddScoped<IWardService, WardService>();
+
+builder.Services.AddScoped<IDistrictRepository, DistrictRepository>();
+builder.Services.AddScoped<IDistrictService, DistrictService>();
+//
 
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 

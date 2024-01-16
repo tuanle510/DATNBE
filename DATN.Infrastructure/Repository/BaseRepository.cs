@@ -192,11 +192,17 @@ namespace DATN.Infrastructure.Repository
             return res;
         }
 
-        public async Task<List<object>> GetComboboxData(string columns, int take, int skip, string? filter)
+        public async Task<List<object>> GetComboboxData(string columns, int take, int skip, List<Filter>? filter)
         {
             var table = this.getTableName(typeof(T));
+            var parameters = new DynamicParameters();
+            var where = this.buildWhere(filter, parameters);
             // Thực hiện khai báo câu lệnh truy vấn SQL:
             var sb = $"SELECT { columns } FROM { table }";
+            if (!string.IsNullOrEmpty(where))
+            {
+                sb += $" where {where}";
+            }
             // Nếu bằng -1 thì take all
             if (take != -1)
             {
@@ -206,7 +212,6 @@ namespace DATN.Infrastructure.Repository
             {
                 sb += $" OFFSET @skip";
             }
-            var parameters = new DynamicParameters();
             parameters.Add("@take", take);
             parameters.Add("@skip", skip);
 

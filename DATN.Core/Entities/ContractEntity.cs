@@ -13,7 +13,7 @@ namespace DATN.Core.Entities
         [PrimaryKey]
         public Guid contract_id { get; set; }
         /// <summary>
-        /// Loại hợp đ
+        /// Loại hợp đồng
         /// </summary>
         public string? contract_type { get; set; }
         /// <summary>

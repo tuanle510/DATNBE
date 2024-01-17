@@ -12,9 +12,34 @@ namespace DATN.Core.Services
     public class ClientService : BaseService<ClientEntity>, IClientService
     {
         IClientRepository _clienttRepository;
-        public ClientService(IClientRepository clientRepository) : base(clientRepository)
+        IContractRepository _contractRepository;
+
+        public ClientService(
+            IClientRepository clientRepository,
+            IContractRepository contractRepository
+            ) : base(clientRepository)
         {
             _clienttRepository = clientRepository;
+            _contractRepository = contractRepository;
+
+        }
+
+        /// <summary>
+        /// Gọi các danh sách liên quan
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="master"></param>
+        /// <returns></returns>
+        public override object getDetailRef(Guid id, ClientEntity master)
+        {
+            var tab1 = _contractRepository.GetByMasterId(id, nameof(ClientEntity.client_id));
+            var res = new
+            {
+                master = master,
+                tab1 = tab1,
+            };
+
+            return res;
         }
     }
 }

@@ -48,5 +48,29 @@ namespace DATN.API.Controllers
                 return HandleException(ex);
             }
         }
+
+        /// <summary>
+        /// Xử lí lấy dữ liệu về theo Id
+        /// </summary>
+        /// <param name="entityId"></param>
+        /// <returns></returns>
+        [HttpGet("dashboard/{year}")]
+        public IActionResult GetDashboard(int year)
+        {
+            try
+            {
+                //var master = _contractGroupRepository.GetDashboard(entityId);
+                //var res = new ContractGroupParam()
+                //{
+                //    master = master,
+                //    details = details
+                //};
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return HandleException(ex);
+            }
+        }
     }
 }

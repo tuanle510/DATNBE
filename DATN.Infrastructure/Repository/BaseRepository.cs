@@ -325,5 +325,20 @@ namespace DATN.Infrastructure.Repository
             var res = _sqlConnection.Query<object>(sqlQuerry, param: parameters);
             return res.ToList().Count > 0;
         }
+
+        public List<object> GetByMasterId(Guid id, string idString)
+        {
+            var table = this.getTableName(typeof(T));
+            // Thực hiện khai báo câu lệnh truy vấn SQL:
+            var sqlQuery = $"SELECT * FROM {table} WHERE {idString} = @id ORDER BY created_date";
+            var parameters = new DynamicParameters();
+            parameters.Add("@id", id);
+
+            // Thực hiện câu truy vấn:
+            var entities = _sqlConnection.Query<object>(sqlQuery, param: parameters);
+
+            // Trả về dữ liệu dạng List:
+            return entities.ToList();
+        }
     }
 }

@@ -82,6 +82,14 @@ namespace DATN.Core.Interfaces.Respositories
         /// <returns></returns>
         int DeleteByMasterId(Guid param);
 
+        /// <summary>
+        ///  Lấy danh sách theo master
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="idString">tên key của master</param>
+        /// <returns></returns>
+        List<object> GetByMasterId(Guid id, string idString);
+
         bool CheckArise(Guid param);
     }
 }

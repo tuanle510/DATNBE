@@ -67,5 +67,6 @@ namespace DATN.Core.Interfaces.Services
         /// <param name="entity"></param>
         /// <returns></returns>
         List<ValidateError> DeleteService(List<Guid> param);
+        object getDetailRef(Guid id, T master);
     }
 }

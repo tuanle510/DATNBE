@@ -79,7 +79,9 @@ namespace MISA.Web03.API.Controllers
         {
             try
             {
-                var res = _baseRepository.GetById(entityId);
+                var master = _baseRepository.GetById(entityId);
+                // Lấy thêm các thành phàn liên quan
+                var res = _baseService.getDetailRef(entityId, master);
                 return Ok(res);
             }
             catch (Exception ex)

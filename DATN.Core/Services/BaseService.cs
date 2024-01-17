@@ -188,5 +188,21 @@ namespace DATN.Core.Services
                 };
             }
         }
+
+        /// <summary>
+        /// Gọi các danh sách liên quan
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="master"></param>
+        /// <returns></returns>
+        public virtual object getDetailRef(Guid id, T master)
+        {
+            var res = new
+            {
+                master = master,
+            };
+
+            return res;
+        }
     }
 }

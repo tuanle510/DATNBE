@@ -41,5 +41,21 @@ namespace DATN.Core.Services
 
             return res;
         }
+
+        /// <summary>
+        /// Check phát sinh khi xóa
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <returns></returns>
+        public override object? CheckArise(Guid guid)
+        {
+            var tab1 = _contractRepository.GetByMasterId(guid, nameof(ClientEntity.client_id));
+            var res = new
+            {
+                contract = tab1.Count(),
+            };
+
+            return (tab1?.Count() == 0) ? null : res;
+        }
     }
 }

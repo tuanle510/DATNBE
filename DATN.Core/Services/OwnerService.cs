@@ -50,5 +50,25 @@ namespace DATN.Core.Services
 
             return res;
         }
+
+        /// <summary>
+        /// Check phát sinh khi xóa
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <returns></returns>
+        public override object? CheckArise(Guid guid)
+        {
+            var tab1 = _apartmentRepository.GetByMasterId(guid, nameof(OwnerEntity.owner_id));
+            var tab2 = _contractGroupRepository.GetByMasterId(guid, nameof(OwnerEntity.owner_id));
+            var tab3 = _contractRepository.GetByMasterId(guid, nameof(OwnerEntity.owner_id));
+            var res = new
+            {
+                apartment = tab1.Count(),
+                contractGroup = tab2.Count(),
+                contract = tab3.Count(),
+            };
+
+            return (tab1?.Count() == 0 && tab2?.Count() == 0 && tab3?.Count() == 0) ? null : res;
+        }
     }
 }

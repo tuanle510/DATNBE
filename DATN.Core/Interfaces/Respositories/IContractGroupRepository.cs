@@ -9,5 +9,6 @@ namespace DATN.Core.Interfaces.Respositories
 {
     public interface IContractGroupRepository : IBaseRepository<ContractGroupEntity>
     {
+        object GetDashboard(int year);
     }
 }

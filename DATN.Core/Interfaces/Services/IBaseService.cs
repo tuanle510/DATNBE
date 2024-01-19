@@ -67,6 +67,21 @@ namespace DATN.Core.Interfaces.Services
         /// <param name="entity"></param>
         /// <returns></returns>
         List<ValidateError> DeleteService(List<Guid> param);
+
+        /// <summary>
+        /// Lấy cá danh sách liên quan 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="master"></param>
+        /// <returns></returns>
         object getDetailRef(Guid id, T master);
+
+
+        /// <summary>
+        /// Check phát sinh khi xóa
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <returns></returns>
+        object? CheckArise(Guid guid);
     }
 }

@@ -36,5 +36,21 @@ namespace DATN.Core.Services
 
             return res;
         }
+
+        /// <summary>
+        /// Check phát sinh khi xóa
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <returns></returns>
+        public override object? CheckArise(Guid guid)
+        {
+            var tab1 = _apartmentRepository.GetByMasterId(guid, nameof(BuildingEntity.building_id));
+            var res = new
+            {
+                apartment = tab1.Count(),
+            };
+
+            return (tab1?.Count() == 0) ? null : res;
+        }
     }
 }

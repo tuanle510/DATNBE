@@ -59,13 +59,8 @@ namespace DATN.API.Controllers
         {
             try
             {
-                //var master = _contractGroupRepository.GetDashboard(entityId);
-                //var res = new ContractGroupParam()
-                //{
-                //    master = master,
-                //    details = details
-                //};
-                return Ok();
+                var master = _contractGroupRepository.GetDashboard(year);
+                return Ok(master);
             }
             catch (Exception ex)
             {

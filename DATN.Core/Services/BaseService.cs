@@ -173,20 +173,22 @@ namespace DATN.Core.Services
 
         private void validateBeforeDelete(Guid guid)
         {
-            var isArise = _baseRepository.CheckArise(guid);
+            var arise = this.CheckArise(guid);
             // Nếu có phát sinh thì không xóa được
-            if (isArise)
+            if (arise != null)
             {
                 throw new BusinessException()
                 {
                     ErrorMsg = "VALIDATE",
                     ErrorCode = "VALIDATE",
-                    ErrorData = new
-                    {
-                        id = guid
-                    }
+                    ErrorData = arise
                 };
             }
+        }
+
+        public virtual object? CheckArise(Guid guid)
+        {
+            return null;
         }
 
         /// <summary>

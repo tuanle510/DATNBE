@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace DATN.Core.Entities
 {
     [TableName("contract")]
-    public class ContractEntity
+    public class ContractEntity : BaseEntity
     {
         [PrimaryKey]
         public Guid contract_id { get; set; }
@@ -80,10 +80,10 @@ namespace DATN.Core.Entities
         /// Ghi chú
         /// </summary>
         public string? note { get; set; }
-        public DateTime? created_date { get; set; }
-        public string? created_by { get; set; }
-        public DateTime? modified_date { get; set; }
-        public string? modified_by { get; set; }
+        /// <summary>
+        /// Người phụ trách
+        /// </summary>
+        public string? assigned_to_name { get; set; }
             
     }
 }

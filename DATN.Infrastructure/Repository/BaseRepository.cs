@@ -284,7 +284,7 @@ namespace DATN.Infrastructure.Repository
             return props?.FirstOrDefault()?.Name;
         }
 
-        protected string? buildWhere(List<Filter> filter, DynamicParameters param)
+        protected virtual string? buildWhere(List<Filter> filter, DynamicParameters param)
         {
             var where = new StringBuilder();
             if (filter != null)

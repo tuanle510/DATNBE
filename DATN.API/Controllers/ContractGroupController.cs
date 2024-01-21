@@ -36,6 +36,7 @@ namespace DATN.API.Controllers
             {
                 var master = _contractGroupRepository.GetById(entityId);
                 var details = _contractRepository.GetByMasterId(entityId);
+                details = details.OrderBy(o => o.created_date).ToList();
                 var res = new ContractGroupParam()
                 {
                     master = master,

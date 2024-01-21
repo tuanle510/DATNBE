@@ -81,9 +81,17 @@ namespace DATN.Core.Entities
         /// </summary>
         public string? note { get; set; }
         /// <summary>
+        /// Trạng thái 
+        /// </summary>
+        public string? status { get; set; }
+        /// <summary>
         /// Người phụ trách
         /// </summary>
         public string? assigned_to_name { get; set; }
+        /// <summary>
+        /// Tổng thời gian bản hợp đồng
+        /// </summary>
+        public string? contract_term { get; set; }
             
     }
 }

@@ -1,4 +1,5 @@
-﻿using DATN.Core.Entities;
+﻿using Dapper;
+using DATN.Core.Entities;
 using DATN.Core.Params;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using MySqlConnector;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -17,7 +19,7 @@ namespace DATN.API.Controllers
     {
         //IAuthRepository<AuthEntiry> _authRepository;
         //IAuthService<AuthEntiry> _authService;
-        //public AuthController(IAuthRepository<AuthEntiry> authRepository, IAuthService<AuthEntiry> authService)
+        //public AuthController(IAuthRepository<AuthEntiry> authRepository, IAuthService<AuthEntiry> authService) : base(authRepository, authService)
         //{
         //    _authRepository = authRepository;
         //    _authService = authService;
@@ -29,10 +31,15 @@ namespace DATN.API.Controllers
         /// <returns></returns>
         //POST api/<UsersController>
         private readonly IConfiguration _configuration;
+        readonly string _connectionString = string.Empty;
+        protected MySqlConnection _sqlConnection;
 
         public AuthController(IConfiguration configuration)
         {
-            _configuration = configuration;
+            _configuration = configuration;// Khai báo thông tin database:
+            _connectionString = _configuration.GetConnectionString("LTTUAN");
+            // Khỏi tạo kết nối đến database --> sử dụng mySqlConnector
+            _sqlConnection = new MySqlConnection(_connectionString);
         }
 
         [HttpPost("Login")]
@@ -67,8 +74,8 @@ namespace DATN.API.Controllers
             {
                 new Claim (ClaimTypes.Name, user.user_name),
                 //new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                //new Claim("user_id", user.user_id.ToString()),
-                //new Claim("email", user.email)
+                new Claim("user_id", user.user_id.ToString()),
+                new Claim("email", user.email)
             };
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -106,15 +113,15 @@ namespace DATN.API.Controllers
         {
             // TODO: mã hóa password, làm thêm task (bất đồng độ)
             // băm hash256, check key 
-            if (email == "string" && password == "string")
+            var sb = $"SELECT * FROM auth where email = @email and password = @password";
+            var parameters = new DynamicParameters();
+            parameters.Add($"@email", email);
+            parameters.Add($"@password", password);
+            var entities = _sqlConnection.QueryFirstOrDefault<AuthEntiry>(sb, param: parameters);
+
+            if (entities != null)
             {
-                return new AuthEntiry()
-                {
-                    //Email = "user@mail",
-                    //FirstName = "Lê",
-                    user_name = "Tuấn",
-                    //Username = "Tit"
-                };
+                return entities;
             }
             else
             {
